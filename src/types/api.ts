@@ -1,4 +1,4 @@
-export type SourceSystem = "ADO" | "GLPI";
+export type SourceSystem = "Azure DevOps" | "GLPI" | "Ambos";
 
 export type TaskStatus = "1" | "2" | "3";
 // 1: Em andamento
