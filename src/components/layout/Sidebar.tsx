@@ -1,103 +1,63 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { BarChart, User, Shield } from "lucide-react";
-import { useSession } from "next-auth/react";
+import * as React from "react";
+import { IconDashboard, IconListDetails, IconUser } from "@tabler/icons-react";
 
-const navItems = [
-  {
-    label: "Dashboard Geral",
-    href: "/dashboard",
-    icon: BarChart,
-  },
-  {
-    label: "Minha Produtividade",
-    href: "/dashboard/me",
-    icon: User,
-  },
-];
+import { NavMain } from "@/components/nav-main";
 
-const adminItems = [
-  {
-    label: "Administração",
-    href: "/dashboard/admin",
-    icon: Shield,
-  },
-];
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
 
-export function Sidebar() {
-  const pathname = usePathname();
-  const { data: session } = useSession();
+import Logo from "@/images/logo.svg";
+import Image from "next/image";
 
-  const role = session?.user?.email;
+const data = {
+  navMain: [
+    {
+      title: "Geral",
+      url: "/dashboard",
+      icon: IconDashboard,
+    },
+    {
+      title: "Individual",
+      url: "/dashboard/me",
+      icon: IconUser,
+    },
+    {
+      title: "Administrativo",
+      url: "/dashboard/admin",
+      icon: IconListDetails,
+    },
+  ],
+};
 
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <aside className="w-64 border-r bg-background h-screen flex flex-col">
-      {/* Logo */}
-      <div className="p-6 border-b">
-        <h1 className="text-lg font-semibold tracking-tight">
-          ⏱ Time Dashboard
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Monitoramento de Produtividade
-        </p>
-      </div>
-
-      {/* Navegação */}
-      <nav className="flex-1 p-4 space-y-2">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href;
-
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-                isActive ? "bg-muted font-medium" : "hover:bg-muted/50"
-              )}
+    <Sidebar collapsible="offcanvas" {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:p-1.5"
             >
-              <Icon className="h-4 w-4" />
-              {item.label}
-            </Link>
-          );
-        })}
-
-        {role === "admin" && (
-          <>
-            <div className="mt-6 mb-2 text-xs font-semibold text-muted-foreground uppercase">
-              Administração
-            </div>
-
-            {adminItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href;
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-                    isActive ? "bg-muted font-medium" : "hover:bg-muted/50"
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
-                </Link>
-              );
-            })}
-          </>
-        )}
-      </nav>
-
-      {/* Rodapé */}
-      <div className="p-4 border-t text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Synergroup
-      </div>
-    </aside>
+              <a href="#">
+                <Image src={Logo} alt="Synergroup" width={24} height={24} />
+                <span className="text-base font-semibold">Synergroup</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={data.navMain} />
+      </SidebarContent>
+    </Sidebar>
   );
 }

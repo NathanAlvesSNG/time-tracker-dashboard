@@ -10,20 +10,30 @@ type HeaderProps = {
 
 export function Header({ title }: HeaderProps) {
   return (
-    <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        <SidebarTrigger className="-ml-1" />
-        <Separator
-          orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
-        />
-        <h1 className="text-base font-medium">{title}</h1>
+    <header className="flex h-(--header-height) shrink-0 items-center border-b">
+      <div className="flex w-full items-center px-4 lg:px-6">
+        <div className="flex items-center gap-2 min-w-0">
+          <SidebarTrigger className="-ml-1 shrink-0" />
+          <Separator
+            orientation="vertical"
+            className="mx-2 data-[orientation=vertical]:h-4 shrink-0"
+          />
+          <h1 className="truncate text-base font-medium">{title}</h1>
+        </div>
+
+        <div className="hidden lg:flex flex-1 justify-center">
+          <UserMenu />
+        </div>
+
         <div className="ml-auto flex items-center gap-2">
+          <div className="lg:hidden">
+            <UserMenu />
+          </div>
+
           <ThemeSelector />
           <ModeToggle />
         </div>
       </div>
-      <UserMenu />
     </header>
   );
 }

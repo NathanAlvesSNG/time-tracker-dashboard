@@ -1,6 +1,6 @@
 "use client";
 
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/layout/sidebar";
 import { DashboardGeneralCards } from "@/components/dashboard-general-cards";
 import { timeTracksColumns } from "@/components/data-table/columns/time-tracks.columns";
 import { DataTable } from "@/components/data-table/data-table";
@@ -33,7 +33,7 @@ export default function Page() {
     <SidebarProvider
       style={
         {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--sidebar-width": "calc(var(--spacing) * 50)",
           "--header-height": "calc(var(--spacing) * 12)",
         } as React.CSSProperties
       }

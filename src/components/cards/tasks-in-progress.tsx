@@ -8,7 +8,7 @@ export default function TasksInProgressCard() {
       value="12"
       icon={IconHourglassHigh}
       description="Seu time está trabalhando em 12 tarefas no momento"
-      sourceSystem="ADO"
+      sourceSystem="Azure DevOps"
     />
   );
 }

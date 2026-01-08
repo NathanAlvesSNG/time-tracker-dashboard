@@ -14,7 +14,7 @@ export const sourceSystemConfig: Record<
     icon: IconType;
   }
 > = {
-  ADO: {
+  "Azure DevOps": {
     label: "Azure DevOps",
     variant: "secondary",
     className: "text-blue-600 border-blue-600",

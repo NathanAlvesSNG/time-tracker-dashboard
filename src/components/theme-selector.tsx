@@ -8,7 +8,6 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -29,24 +28,6 @@ const DEFAULT_THEMES = [
   {
     name: "Amber",
     value: "amber",
-  },
-];
-
-const SCALED_THEMES = [
-  {
-    name: "Default",
-    value: "default-scaled",
-  },
-  {
-    name: "Blue",
-    value: "blue-scaled",
-  },
-];
-
-const MONO_THEMES = [
-  {
-    name: "Mono",
-    value: "mono-scaled",
   },
 ];
 
@@ -74,23 +55,6 @@ export function ThemeSelector() {
           <SelectGroup>
             <SelectLabel>Default</SelectLabel>
             {DEFAULT_THEMES.map((theme) => (
-              <SelectItem key={theme.name} value={theme.value}>
-                {theme.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-          <SelectSeparator />
-          <SelectGroup>
-            <SelectLabel>Scaled</SelectLabel>
-            {SCALED_THEMES.map((theme) => (
-              <SelectItem key={theme.name} value={theme.value}>
-                {theme.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-          <SelectGroup>
-            <SelectLabel>Monospaced</SelectLabel>
-            {MONO_THEMES.map((theme) => (
               <SelectItem key={theme.name} value={theme.value}>
                 {theme.name}
               </SelectItem>

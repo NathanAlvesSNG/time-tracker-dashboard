@@ -16,12 +16,12 @@ type DashboardCardProps = {
   value: string | number;
   icon: TablerIcon;
   description?: string;
-  sourceSystem: SourceSystem;
+  sourceSystem?: SourceSystem;
 };
 
 export default function DashboardCard(props: DashboardCardProps) {
   const { title, value, icon, description, sourceSystem } = props;
-  const source = sourceSystemConfig[sourceSystem];
+  const source = sourceSystemConfig[sourceSystem!];
 
   return (
     <Card className="@container/card">
@@ -34,15 +34,17 @@ export default function DashboardCard(props: DashboardCardProps) {
               })}
             {title}
           </CardDescription>
-          <Badge
-            variant={source.variant}
-            className={`flex items-center gap-1 text-xs ${source.className}`}
-          >
-            {React.createElement(source.icon, {
-              className: "size-4",
-            })}
-            {source.label}
-          </Badge>
+          {source && (
+            <Badge
+              variant={source.variant}
+              className={`flex items-center gap-1 text-xs ${source.className}`}
+            >
+              {React.createElement(source.icon, {
+                className: "size-4",
+              })}
+              {source.label}
+            </Badge>
+          )}
         </div>
 
         <CardTitle className="text-3xl font-semibold tabular-nums">

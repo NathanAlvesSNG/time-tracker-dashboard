@@ -7,6 +7,17 @@ export type TaskStatus = "1" | "2" | "3";
 
 export type UserRole = "admin" | "user" | "viewer";
 
+export type DailyHours = {
+  date: string;
+  available: number;
+  worked: number;
+};
+
+export type ProductivityPerDay = {
+  date: string;
+  productivity: number;
+};
+
 export interface Task {
   id: number;
   taskId: string;
