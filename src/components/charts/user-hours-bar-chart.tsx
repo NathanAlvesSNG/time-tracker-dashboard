@@ -68,7 +68,18 @@ export function UserDailyHoursBarChart({ data }: Props) {
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
+              content={
+                <ChartTooltipContent
+                  indicator="dashed"
+                  labelFormatter={(value) =>
+                    new Date(value).toLocaleDateString("pt-BR", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })
+                  }
+                />
+              }
             />
             <Bar dataKey="available" fill="var(--color-available)" radius={4}>
               <LabelList

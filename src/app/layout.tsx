@@ -6,11 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ActiveThemeProvider } from "@/components/active-theme";
-
-const META_THEME_COLORS = {
-  light: "#ffffff",
-  dark: "#000000",
-};
+import { FiltersProvider } from "@/contexts/filters-context";
 
 export const metadata: Metadata = {
   title: "Dashboard - Time Tracker",
@@ -43,7 +39,7 @@ export default async function RootLayout({
           enableColorScheme
         >
           <ActiveThemeProvider initialTheme={activeThemeValue}>
-            {children}
+            <FiltersProvider>{children}</FiltersProvider>
           </ActiveThemeProvider>
         </ThemeProvider>
       </body>

@@ -1,0 +1,37 @@
+[
+  {
+    "person": "Gabriel",
+    "availableHours": 30,
+    "workedHours": 20,
+    "doneTasks": 10,
+    "productivity": 50
+  },
+  {
+    "person": "Nathan",
+    "availableHours": 40,
+    "workedHours": 36,
+    "doneTasks": 18,
+    "productivity": 90
+  },
+  {
+    "person": "Isabela",
+    "availableHours": 35,
+    "workedHours": 28,
+    "doneTasks": 14,
+    "productivity": 80
+  },
+  {
+    "person": "Lucas",
+    "availableHours": 20,
+    "workedHours": 12,
+    "doneTasks": 6,
+    "productivity": 60
+  },
+  {
+    "person": "Mariana",
+    "availableHours": 45,
+    "workedHours": 42,
+    "doneTasks": 22,
+    "productivity": 93
+  }
+]

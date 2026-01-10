@@ -49,7 +49,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <Image src={Logo} alt="Synergroup" width={24} height={24} />
-                <span className="text-base font-semibold">Synergroup</span>
+                <span className="text-foreground text-lg font-semibold">
+                  Synergroup
+                </span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

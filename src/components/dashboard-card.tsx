@@ -10,18 +10,19 @@ import {
 import { SourceSystem } from "@/types/api";
 import { sourceSystemConfig } from "@/lib/source-system";
 import { Badge } from "./ui/badge";
+import { useFilters } from "@/contexts/filters-context";
 
 type DashboardCardProps = {
   title: string;
   value: string | number;
   icon: TablerIcon;
   description?: string;
-  sourceSystem?: SourceSystem;
 };
 
 export default function DashboardCard(props: DashboardCardProps) {
-  const { title, value, icon, description, sourceSystem } = props;
-  const source = sourceSystemConfig[sourceSystem!];
+  const { sourceSystem } = useFilters();
+  const { title, value, icon, description } = props;
+  const source = sourceSystemConfig[sourceSystem ? sourceSystem : "All"];
 
   return (
     <Card className="@container/card">

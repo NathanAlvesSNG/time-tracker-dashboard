@@ -8,7 +8,6 @@ export default function ActiveUsersCard() {
       value="15"
       icon={IconUsers}
       description="Você tem 15 usuários trabalhando atualmente"
-      sourceSystem="Ambos"
     />
   );
 }

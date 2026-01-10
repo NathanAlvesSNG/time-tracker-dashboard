@@ -8,7 +8,6 @@ export default function ActiveProjectsCard() {
       value="3"
       icon={IconFolder}
       description="Número de projetos atualmente ativos"
-      sourceSystem="Azure DevOps"
     />
   );
 }

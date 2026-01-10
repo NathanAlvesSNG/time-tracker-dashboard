@@ -8,7 +8,6 @@ export default function HoursWorkedCard() {
       value="00:10:35"
       icon={IconStopwatch}
       description="Tempo total de execução de todas as tarefas (hh:mm:ss)"
-      sourceSystem="Ambos"
     />
   );
 }

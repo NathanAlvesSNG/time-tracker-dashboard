@@ -1,49 +1,88 @@
 "use client";
 
-import { Table } from "@tanstack/react-table";
-import { Input } from "@/components/ui/input";
+import { type DateRange } from "react-day-picker";
 
-type Props<TData> = {
-  table: Table<TData>;
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { CalendarIcon } from "lucide-react";
+
+import { useFilters } from "@/contexts/filters-context";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
+export type DateRangeFilter = {
+  from: Date | undefined;
+  to: Date | undefined;
 };
 
-export function DateRangeFilter<TData>({ table }: Props<TData>) {
-  const column = table.getColumn("startTime");
-  if (!column) return null;
+export function DateRangeFilter() {
+  const { dateRange, setDateRange } = useFilters();
 
-  const value = (column.getFilterValue() as { from?: Date; to?: Date }) ?? {};
+  const selected: DateRange | undefined =
+    dateRange?.from || dateRange?.to
+      ? { from: dateRange?.from, to: dateRange?.to }
+      : undefined;
 
   return (
     <div className="flex flex-col gap-2">
       <span className="text-sm font-medium">Período</span>
 
-      <div className="flex gap-2">
-        <Input
-          type="date"
-          value={value.from ? formatDate(value.from) : ""}
-          onChange={(e) =>
-            column.setFilterValue({
-              ...value,
-              from: e.target.value ? new Date(e.target.value) : undefined,
-            })
-          }
-        />
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              "w-[260px] justify-start text-left font-normal",
+              !selected && "text-muted-foreground"
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
 
-        <Input
-          type="date"
-          value={value.to ? formatDate(value.to) : ""}
-          onChange={(e) =>
-            column.setFilterValue({
-              ...value,
-              to: e.target.value ? new Date(e.target.value) : undefined,
-            })
-          }
-        />
-      </div>
+            {selected?.from ? (
+              selected.to ? (
+                <>
+                  {format(selected.from, "dd/MM/yyyy", { locale: ptBR })} —{" "}
+                  {format(selected.to, "dd/MM/yyyy", { locale: ptBR })}
+                </>
+              ) : (
+                format(selected.from, "dd/MM/yyyy", { locale: ptBR })
+              )
+            ) : (
+              <span>Selecione um período</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="range"
+            numberOfMonths={2}
+            defaultMonth={selected?.from}
+            selected={selected}
+            onSelect={(range) => {
+              setDateRange({
+                from: range?.from,
+                to: range?.to,
+              });
+            }}
+            locale={ptBR}
+            className="rounded-lg border"
+          />
+        </PopoverContent>
+      </Popover>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => setDateRange({ from: undefined, to: undefined })}
+      >
+        Limpar
+      </Button>
     </div>
   );
-}
-
-function formatDate(date: Date) {
-  return date.toISOString().split("T")[0];
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { Table } from "@tanstack/react-table";
 import {
   Select,
   SelectContent,
@@ -10,32 +9,24 @@ import {
   SelectGroup,
   SelectLabel,
 } from "@/components/ui/select";
-import { useState, useEffect } from "react";
+import { useFilters } from "@/contexts/filters-context";
 
-type Props<TData> = {
-  table: Table<TData>;
+type Props = {
+  options: string[];
 };
 
-const OPTIONS = [
-  { value: "Azure DevOps", label: "Azure DevOps" },
-  { value: "GLPI", label: "GLPI" },
-];
-
-export function SourceSystemFilter<TData>({ table }: Props<TData>) {
-  const value = table.getColumn("sourceSystem")?.getFilterValue() as
-    | string
-    | undefined;
+export function SourceSystemFilter({ options }: Props) {
+  const { sourceSystem, setSourceSystem } = useFilters();
 
   return (
     <div className="flex flex-col gap-2">
       <span className="text-sm font-medium">Sistema</span>
       <Select
-        value={value}
-        onValueChange={(v) =>
-          table
-            .getColumn("sourceSystem")
-            ?.setFilterValue(v === "all" ? undefined : v)
-        }
+        value={sourceSystem ?? "all"}
+        onValueChange={(v) => {
+          const value = v === "all" ? undefined : (v as any);
+          setSourceSystem(value);
+        }}
         defaultValue="all"
       >
         <SelectTrigger className="w-48">
@@ -45,9 +36,9 @@ export function SourceSystemFilter<TData>({ table }: Props<TData>) {
           <SelectItem value="all">Todos</SelectItem>
           <SelectGroup>
             <SelectLabel>Sistema</SelectLabel>
-            {OPTIONS.map((opt) => (
-              <SelectItem key={opt.value} value={opt.value}>
-                {opt.label}
+            {options.map((system) => (
+              <SelectItem key={system} value={system}>
+                {system}
               </SelectItem>
             ))}
           </SelectGroup>

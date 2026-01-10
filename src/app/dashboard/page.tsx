@@ -8,8 +8,25 @@ import { Header } from "@/components/layout/header";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TimeTrackingRow } from "@/types/time-tracking";
+import { DashboardFilters } from "@/components/layout/dashboard-filters";
+import { useEffect, useMemo, useState } from "react";
+import {
+  ColumnFiltersState,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+} from "@tanstack/react-table";
+import { useFilters } from "@/contexts/filters-context";
+import { SourceSystem } from "@/types/api";
 
 export default function Page() {
+  const { sourceSystem, person } = useFilters();
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const apiMock: TimeTrackingRow[] = [
     {
       person: "Nathan",
@@ -29,11 +46,53 @@ export default function Page() {
     },
   ];
 
+  const table = useReactTable({
+    data: apiMock,
+    columns: timeTracksColumns,
+    state: {
+      columnFilters,
+      sorting,
+    },
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+
+  useEffect(() => {
+    const newFilters: ColumnFiltersState = [];
+
+    if (sourceSystem) {
+      newFilters.push({
+        id: "sourceSystem",
+        value: sourceSystem,
+      });
+    }
+
+    if (person) {
+      newFilters.push({
+        id: "person",
+        value: person,
+      });
+    }
+    table.setColumnFilters(newFilters);
+  }, [sourceSystem, person, table]);
+
+  const sourceSystemOptions: SourceSystem[] = useMemo(() => {
+    return Array.from(new Set(apiMock.map((item) => item.sourceSystem))).sort();
+  }, [apiMock]);
+
+  const personOptions: string[] = useMemo(() => {
+    return Array.from(new Set(apiMock.map((item) => item.person))).sort();
+  }, [apiMock]);
+
   return (
     <SidebarProvider
       style={
         {
-          "--sidebar-width": "calc(var(--spacing) * 50)",
+          "--sidebar-width": "calc(var(--spacing) * 64)",
           "--header-height": "calc(var(--spacing) * 12)",
         } as React.CSSProperties
       }
@@ -41,14 +100,23 @@ export default function Page() {
       <AppSidebar variant="inset" />
       <SidebarInset>
         <Header title="Dashboard Geral - Time Tracker" />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <DashboardGeneralCards />
-              <div className="px-4 lg:px-6">
-                <DataTable columns={timeTracksColumns} data={apiMock} />
-              </div>
+        <div className="@container/main flex flex-1 flex-col">
+          <div className="border-b bg-background">
+            <div className="px-4 py-3 lg:px-6">
+              <DashboardFilters
+                sourceSystems={sourceSystemOptions}
+                persons={personOptions}
+                showSourceSystem
+                showPerson
+              />
             </div>
+          </div>
+          <div className="flex flex-1 flex-col gap-6 px-4 py-6 lg:px-6">
+            <DashboardGeneralCards />
+            <DataTable
+              key={`table-${JSON.stringify(columnFilters)}`}
+              table={table}
+            />
           </div>
         </div>
       </SidebarInset>

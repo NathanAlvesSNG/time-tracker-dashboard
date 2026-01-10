@@ -8,7 +8,6 @@ export default function AvailableHoursCard() {
       description="Horas disponíveis para alocação em projetos."
       icon={IconClock}
       value="04:00:00"
-      sourceSystem="Ambos"
     />
   );
 }

@@ -8,7 +8,6 @@ export default function TasksCompletedCard() {
       value="10"
       icon={IconCheck}
       description="Seu time concluiu 10 tarefas esta semana"
-      sourceSystem="GLPI"
     />
   );
 }

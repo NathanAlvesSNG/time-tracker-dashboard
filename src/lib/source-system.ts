@@ -16,7 +16,7 @@ export const sourceSystemConfig: Record<
 > = {
   "Azure DevOps": {
     label: "Azure DevOps",
-    variant: "secondary",
+    variant: "outline",
     className: "text-blue-600 border-blue-600",
     icon: VscAzureDevops,
   },
@@ -26,7 +26,7 @@ export const sourceSystemConfig: Record<
     className: "text-yellow-600 border-yellow-600",
     icon: FaTicket,
   },
-  Ambos: {
+  All: {
     label: "Ambos",
     variant: "default",
     icon: IoLayers,

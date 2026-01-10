@@ -1,5 +1,6 @@
 "use client";
 
+import { useFilters } from "@/contexts/filters-context";
 import {
   Select,
   SelectContent,
@@ -8,25 +9,24 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useFilters } from "@/contexts/filters-context";
+} from "../ui/select";
 
 type Props = {
   options: string[];
 };
 
-export function PersonFilter({ options }: Props) {
-  const { person, setPerson } = useFilters();
+export function ProjectFilter({ options }: Props) {
+  const { project, setProject } = useFilters();
 
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-sm font-medium">Pessoa</span>
+      <span className="text-sm font-medium">Projeto</span>
 
       <Select
-        value={person ?? "all"}
+        value={project ?? "all"}
         onValueChange={(v) => {
           const value = v === "all" ? undefined : (v as any);
-          setPerson(value);
+          setProject(value);
         }}
         defaultValue="all"
       >
@@ -37,10 +37,10 @@ export function PersonFilter({ options }: Props) {
         <SelectContent>
           <SelectItem value="all">Todas</SelectItem>
           <SelectGroup>
-            <SelectLabel>Pessoa</SelectLabel>
-            {options.map((person) => (
-              <SelectItem key={person} value={person}>
-                {person}
+            <SelectLabel>Projeto</SelectLabel>
+            {options.map((project) => (
+              <SelectItem key={project} value={project}>
+                {project}
               </SelectItem>
             ))}
           </SelectGroup>

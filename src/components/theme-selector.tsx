@@ -52,14 +52,11 @@ export function ThemeSelector() {
           <SelectValue placeholder="Select a theme" />
         </SelectTrigger>
         <SelectContent align="end">
-          <SelectGroup>
-            <SelectLabel>Default</SelectLabel>
-            {DEFAULT_THEMES.map((theme) => (
-              <SelectItem key={theme.name} value={theme.value}>
-                {theme.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
+          {DEFAULT_THEMES.map((theme) => (
+            <SelectItem key={theme.name} value={theme.value}>
+              {theme.name}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>

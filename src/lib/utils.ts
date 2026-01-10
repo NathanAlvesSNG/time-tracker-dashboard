@@ -1,3 +1,4 @@
+import { IconMoodEmpty, IconMoodHappy, IconMoodSad } from "@tabler/icons-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -8,23 +9,20 @@ export function cn(...inputs: ClassValue[]) {
 export function getProductivityUI(productivity: number) {
   if (productivity >= 80) {
     return {
-      emoji: "😄",
+      icon: IconMoodHappy,
       border: "border-green-500",
-      text: "text-green-600",
     };
   }
 
   if (productivity >= 50) {
     return {
-      emoji: "😐",
+      icon: IconMoodEmpty,
       border: "border-yellow-500",
-      text: "text-yellow-600",
     };
   }
 
   return {
-    emoji: "😞",
+    icon: IconMoodSad,
     border: "border-red-500",
-    text: "text-red-600",
   };
 }

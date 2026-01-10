@@ -8,7 +8,6 @@ export default function ProductivityCard() {
       description="Acompanhe sua produtividade ao longo do tempo."
       icon={IconChartLine}
       value="87%"
-      sourceSystem="Ambos"
     />
   );
 }

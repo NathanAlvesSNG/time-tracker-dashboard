@@ -25,10 +25,20 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon />}
-                <a href={item.url}>
-                  <span>{item.title}</span>
+              <SidebarMenuButton
+                tooltip={item.title}
+                className="
+                  flex items-center gap-3
+                  py-2.5
+                  text-sm font-medium
+                "
+              >
+                {item.icon && (
+                  <item.icon className="h-5 w-5 shrink-0 text-muted-foreground" />
+                )}
+
+                <a href={item.url} className="flex-1 truncate">
+                  {item.title}
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>

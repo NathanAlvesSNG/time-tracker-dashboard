@@ -8,7 +8,6 @@ export default function ProductivityTeamCard() {
       description="Comparação da produtividade entre você e seu time."
       icon={IconTrophy}
       value={"Muito acima da média"}
-      sourceSystem="Ambos"
     />
   );
 }

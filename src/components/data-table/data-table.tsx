@@ -1,18 +1,6 @@
 "use client";
 
-import * as React from "react";
-import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-  type ColumnDef,
-  type SortingState,
-  type ColumnFiltersState,
-  type VisibilityState,
-} from "@tanstack/react-table";
+import { flexRender, Table as TanstackTable } from "@tanstack/react-table";
 
 import {
   Table,
@@ -24,41 +12,18 @@ import {
 } from "@/components/ui/table";
 
 import { DataTablePagination } from "./data-table-pagination";
-import { DataTableToolbar } from "./data-table-toolbar";
 
 type DataTableProps<TData> = {
-  columns: ColumnDef<TData, any>[];
-  data: TData[];
+  table: TanstackTable<TData>;
+  emptyMessage?: string;
 };
 
-export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-
-  const table = useReactTable({
-    data,
-    columns,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-    },
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-  });
-
+export function DataTable<TData>({
+  table,
+  emptyMessage = "Nenhum resultado encontrado",
+}: DataTableProps<TData>) {
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
       <div className="overflow-hidden rounded-lg border">
         <Table>
           <TableHeader className="bg-muted">
@@ -66,10 +31,12 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -93,10 +60,10 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={table.getAllLeafColumns().length}
                   className="h-24 text-center"
                 >
-                  Nenhum resultado encontrado
+                  {emptyMessage}
                 </TableCell>
               </TableRow>
             )}

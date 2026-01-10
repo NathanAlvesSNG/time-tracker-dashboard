@@ -1,38 +1,33 @@
 "use client";
 
+import { createElement } from "react";
 import { cn, getProductivityUI } from "@/lib/utils";
-import { Avatar } from "../ui/avatar";
-// import { useSession } from "next-auth/react";
 
 export function UserMenu() {
-  // const { data: session } = useSession();
-  // if (!session?.user) return null;
-
   const name = "Nathan Yan";
   const email = "nathan.alves@synergroup.com.br";
   const productivity = 80;
 
-  const { emoji, border, text } = getProductivityUI(productivity);
+  const { icon, border } = getProductivityUI(productivity);
 
   return (
     <div
       className={cn(
-        "flex items-center rounded-lg border transition-colors",
-        "p-1",
-        "lg:gap-2 lg:p-2",
+        "flex items-center gap-2 rounded-md border px-2 py-1",
+        "transition-colors hover:bg-muted/50",
         border
       )}
       title={`Produtividade: ${productivity}%`}
     >
-      <Avatar className="h-8 w-8">
-        <span className={cn("text-2xl leading-none", text)}>{emoji}</span>
-      </Avatar>
+      <div className="flex items-center gap-2">
+        {icon && createElement(icon, { className: "size-8" })}
+      </div>
 
-      <div className="hidden lg:flex flex-col text-left">
-        <span className="text-sm font-medium leading-none">
+      <div className="hidden max-w-[160px] flex-col text-left lg:flex">
+        <span className="truncate text-sm font-medium leading-none">
           {name || "Usuário"}
         </span>
-        <span className="text-xs text-muted-foreground">{email}</span>
+        <span className="truncate text-xs text-muted-foreground">{email}</span>
       </div>
     </div>
   );
