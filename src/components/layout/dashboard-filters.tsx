@@ -48,12 +48,19 @@ export function DashboardFilters({
   return (
     <section
       aria-label="Filtros do dashboard"
-      className="flex flex-wrap items-stretch gap-6 px-4 lg:px-6"
+      className="flex flex-col gap-6 px-4 lg:flex-row lg:px-6"
     >
       {filters.map((filter, index) => (
-        <div key={index} className="flex items-stretch gap-6">
+        <div
+          key={index}
+          className="flex flex-col gap-6 lg:flex-row lg:items-stretch"
+        >
           {index > 0 && (
-            <Separator orientation="vertical" className="bg-border" />
+            <>
+              <Separator className="lg:hidden" />
+
+              <Separator orientation="vertical" className="hidden lg:block" />
+            </>
           )}
 
           <div className="flex flex-col">{filter}</div>

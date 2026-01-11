@@ -25,6 +25,7 @@ import {
 } from "@/types/time-tracking";
 import { timeTracksColumnsProductivity } from "@/components/data-table/columns/time-tracks-productivity";
 import {
+  DailyHours,
   SourceSystem,
   TotalHoursPerPersonPerProjectChart,
   WorkedHoursChart,
@@ -40,6 +41,8 @@ import { DataTable } from "@/components/data-table/data-table";
 import { WorkedHoursPerProjectBarChart } from "@/components/charts/worked-hours-per-project-bar-chart";
 import TotalHoursPerPersonPerProjectBarChart from "@/components/charts/total-hours-per-person-per-project-bar-chart";
 import WorkedHoursPerPersonBarChart from "@/components/charts/worked-hours-per-person";
+import { UserDailyHoursBarChart } from "@/components/charts/user-hours-bar-chart";
+import ProductivityPerDayLineChart from "@/components/charts/productivity-per-day-line-chart";
 
 export default function Page() {
   const { sourceSystem, dateRange, project } = useFilters();
@@ -124,6 +127,24 @@ export default function Page() {
     { person: "Ana", workedHours: 36 },
     { person: "Lucas", workedHours: 28 },
     { person: "Mariana", workedHours: 31 },
+  ];
+
+  const productivityData = [
+    { date: "2024-06-01", productivity: 80 },
+    { date: "2024-06-02", productivity: 83 },
+    { date: "2024-06-03", productivity: 85 },
+    { date: "2024-06-04", productivity: 90 },
+    { date: "2024-06-05", productivity: 88 },
+  ];
+
+  const dailyHoursData: DailyHours[] = [
+    { date: "2024-06-01", available: 5, worked: 4 },
+    { date: "2024-06-02", available: 6, worked: 5 },
+    { date: "2024-06-03", available: 4, worked: 3 },
+    { date: "2024-06-04", available: 7, worked: 6 },
+    { date: "2024-06-05", available: 5, worked: 5 },
+    { date: "2024-06-06", available: 6, worked: 4 },
+    { date: "2024-06-07", available: 5, worked: 5 },
   ];
 
   const tableTimetrack = useReactTable({
@@ -258,8 +279,8 @@ export default function Page() {
                 <DashboardPersonalCards />
 
                 <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-                  {/* <MultipleBarChart /> */}
-                  {/* <LineChart /> */}
+                  <UserDailyHoursBarChart data={dailyHoursData} />
+                  <ProductivityPerDayLineChart data={productivityData} />
                 </div>
 
                 <DataTable table={tableTimetrack} />

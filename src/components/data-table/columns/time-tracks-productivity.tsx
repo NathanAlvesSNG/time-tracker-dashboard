@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import type { ProductivityRow } from "@/types/time-tracking";
 import { ColumnDef } from "@tanstack/react-table";
-import { getProductivityUI } from "@/lib/utils";
+import { cn, getProductivityUI } from "@/lib/utils";
 
 export const timeTracksColumnsProductivity: ColumnDef<ProductivityRow>[] = [
   {
@@ -24,12 +24,23 @@ export const timeTracksColumnsProductivity: ColumnDef<ProductivityRow>[] = [
     accessorKey: "productivity",
     header: "Produtividade",
     cell: ({ getValue }) => {
-      const emoji = getProductivityUI(Number(getValue())).emoji;
+      const value = Number(getValue());
+      const { emoji, text, border } = getProductivityUI(value);
 
       return (
-        <span>
-          {getValue() as number} - {emoji}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium tabular-nums">{value}%</span>
+
+          <span
+            className={cn(
+              "flex h-7 w-7 items-center justify-center rounded-md border text-base",
+              border
+            )}
+            title={text}
+          >
+            {emoji}
+          </span>
+        </div>
       );
     },
   },

@@ -11,6 +11,7 @@ export function getProductivityUI(productivity: number) {
     return {
       emoji: "😀",
       border: "border-green-500",
+      text: "Excelente",
     };
   }
 
@@ -18,11 +19,13 @@ export function getProductivityUI(productivity: number) {
     return {
       emoji: "😐",
       border: "border-yellow-500",
+      text: "Mediano",
     };
   }
 
   return {
     emoji: "☹️",
     border: "border-red-500",
+    text: "Ruim",
   };
 }

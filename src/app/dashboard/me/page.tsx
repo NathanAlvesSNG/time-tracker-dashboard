@@ -164,7 +164,7 @@ export default function Page() {
                 />
               </div>
             </div>
-            <div className="mt-2 md:mt-4">
+            <div className="mt-2 md:mt-4 px-4 lg:px-6">
               <DashboardPersonalCards />
             </div>
             <div className="grid *:container/main grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2">
