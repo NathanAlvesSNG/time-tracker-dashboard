@@ -9,20 +9,20 @@ export function cn(...inputs: ClassValue[]) {
 export function getProductivityUI(productivity: number) {
   if (productivity >= 80) {
     return {
-      icon: IconMoodHappy,
+      emoji: "😀",
       border: "border-green-500",
     };
   }
 
   if (productivity >= 50) {
     return {
-      icon: IconMoodEmpty,
+      emoji: "😐",
       border: "border-yellow-500",
     };
   }
 
   return {
-    icon: IconMoodSad,
+    emoji: "☹️",
     border: "border-red-500",
   };
 }

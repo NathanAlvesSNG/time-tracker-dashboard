@@ -16,6 +16,8 @@ type DashboardFiltersProps = {
   showSourceSystem?: boolean;
   showPerson?: boolean;
   showProject?: boolean;
+
+  hasAll?: boolean;
 };
 
 export function DashboardFilters({
@@ -27,6 +29,8 @@ export function DashboardFilters({
   showSourceSystem = false,
   showPerson = false,
   showProject = false,
+
+  hasAll = true,
 }: DashboardFiltersProps) {
   const filters = [
     showDateRange && <DateRangeFilter key="date" />,
@@ -34,7 +38,7 @@ export function DashboardFilters({
       <SourceSystemFilter key="source" options={sourceSystems} />
     ),
     showPerson && persons.length > 0 && (
-      <PersonFilter key="person" options={persons} />
+      <PersonFilter key="person" options={persons} hasAll={hasAll} />
     ),
     showProject && projects.length > 0 && (
       <ProjectFilter key="project" options={projects} />

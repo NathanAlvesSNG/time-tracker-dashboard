@@ -24,12 +24,11 @@ export const timeTracksColumnsProductivity: ColumnDef<ProductivityRow>[] = [
     accessorKey: "productivity",
     header: "Produtividade",
     cell: ({ getValue }) => {
-      const icon = getProductivityUI(Number(getValue())).icon;
+      const emoji = getProductivityUI(Number(getValue())).emoji;
 
       return (
         <span>
-          {getValue() as number} -
-          {icon && createElement(icon, { className: "size-8" })}
+          {getValue() as number} - {emoji}
         </span>
       );
     },

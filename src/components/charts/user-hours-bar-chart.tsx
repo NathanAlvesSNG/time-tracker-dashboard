@@ -32,11 +32,11 @@ type Props = {
 const chartConfig = {
   available: {
     label: "Horas disponíveis",
-    color: "var(--primary)",
+    color: "var(--chart-1)",
   },
   worked: {
     label: "Horas trabalhadas",
-    color: "var(--secondary)",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
@@ -51,9 +51,17 @@ export function UserDailyHoursBarChart({ data }: Props) {
       </CardHeader>
       <CardContent className="p-0">
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={data}>
+          <BarChart
+            accessibilityLayer
+            data={data}
+            margin={{ top: 16, right: 16, left: 8, bottom: 8 }}
+          >
             <CartesianGrid vertical={false} />
-            <YAxis tickLine={false} axisLine={false} />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(v) => `${v}h`}
+            />
             <XAxis
               dataKey="date"
               tickLine={false}
@@ -81,7 +89,7 @@ export function UserDailyHoursBarChart({ data }: Props) {
                 />
               }
             />
-            <Bar dataKey="available" fill="var(--color-available)" radius={4}>
+            <Bar dataKey="available" fill="var(--chart-1)" radius={4}>
               <LabelList
                 dataKey="available"
                 position="top"
@@ -89,7 +97,7 @@ export function UserDailyHoursBarChart({ data }: Props) {
                 fontSize={11}
               />
             </Bar>
-            <Bar dataKey="worked" fill="var(--color-worked)" radius={4}>
+            <Bar dataKey="worked" fill="var(--chart-2)" radius={4}>
               <LabelList
                 dataKey="worked"
                 position="top"

@@ -13,9 +13,31 @@ export type DailyHours = {
   worked: number;
 };
 
-export type ProductivityPerDay = {
+// Charts Type
+export type ProductivityPerDayChart = {
   date: string;
   productivity: number;
+};
+
+export type WorkedHoursChart = {
+  date: string;
+  workedHours: number;
+};
+
+export type WorkedHoursPerProjectChart = {
+  project: string;
+  workedHours: number;
+};
+
+export type TotalHoursPerPersonPerProjectChart = {
+  person: string;
+  project: string;
+  workedHours: number;
+};
+
+export type WorkedHoursPerPerson = {
+  person: string;
+  workedHours: number;
 };
 
 export interface Task {

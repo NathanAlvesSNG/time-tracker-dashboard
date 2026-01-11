@@ -24,16 +24,16 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 
-import { ProductivityPerDay } from "@/types/api";
+import { ProductivityPerDayChart } from "@/types/api";
 
 type Props = {
-  data: ProductivityPerDay[];
+  data: ProductivityPerDayChart[];
 };
 
 const chartConfig = {
   productivity: {
     label: "Produtividade (%)",
-    color: "var(--primary)",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 
@@ -53,8 +53,8 @@ export default function ProductivityPerDayLineChart({ data }: Props) {
             accessibilityLayer
             data={data}
             margin={{
-              top: 24,
-              right: 16,
+              top: 16,
+              right: 24,
               left: 8,
               bottom: 8,
             }}
@@ -100,7 +100,7 @@ export default function ProductivityPerDayLineChart({ data }: Props) {
             <Line
               dataKey="productivity"
               type="monotone"
-              stroke="var(--color-productivity)"
+              stroke="var(--chart-1)"
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4 }}

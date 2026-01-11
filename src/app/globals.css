@@ -155,12 +155,20 @@
   --secondary: var(--color-neutral-200);
   --secondary-foreground: var(--color-neutral-800);
 
+  --chart-1: var(--color-neutral-600);
+  --chart-2: var(--color-neutral-500);
+  --chart-3: var(--color-neutral-400);
+
   @variant dark {
     --primary: var(--color-neutral-500);
     --primary-foreground: var(--color-neutral-50);
 
     --secondary: var(--color-neutral-700);
     --secondary-foreground: var(--color-neutral-100);
+
+    --chart-1: var(--color-neutral-400);
+    --chart-2: var(--color-neutral-300);
+    --chart-3: var(--color-neutral-200);
   }
 }
 
@@ -172,12 +180,20 @@
   --secondary: var(--color-blue-200);
   --secondary-foreground: var(--color-blue-900);
 
+  --chart-1: var(--color-blue-600);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-400);
+
   @variant dark {
     --primary: var(--color-blue-500);
     --primary-foreground: var(--color-blue-50);
 
     --secondary: var(--color-blue-800);
     --secondary-foreground: var(--color-blue-100);
+
+    --chart-1: var(--color-blue-400);
+    --chart-2: var(--color-blue-300);
+    --chart-3: var(--color-blue-200);
   }
 }
 
@@ -189,12 +205,19 @@
   --secondary: var(--color-lime-200);
   --secondary-foreground: var(--color-lime-900);
 
+  --chart-1: var(--color-lime-600);
+  --chart-2: var(--color-lime-500);
+  --chart-3: var(--color-lime-400);
   @variant dark {
     --primary: var(--color-lime-600);
     --primary-foreground: var(--color-lime-50);
 
     --secondary: var(--color-lime-800);
     --secondary-foreground: var(--color-lime-100);
+
+    --chart-1: var(--color-lime-400);
+    --chart-2: var(--color-lime-300);
+    --chart-3: var(--color-lime-200);
   }
 }
 
@@ -206,11 +229,19 @@
   --secondary: var(--color-amber-200);
   --secondary-foreground: var(--color-amber-900);
 
+  --chart-1: var(--color-amber-600);
+  --chart-2: var(--color-amber-500);
+  --chart-3: var(--color-amber-400);
+
   @variant dark {
     --primary: var(--color-amber-500);
     --primary-foreground: var(--color-amber-50);
 
     --secondary: var(--color-amber-800);
     --secondary-foreground: var(--color-amber-100);
+
+    --chart-1: var(--color-amber-400);
+    --chart-2: var(--color-amber-300);
+    --chart-3: var(--color-amber-200);
   }
 }

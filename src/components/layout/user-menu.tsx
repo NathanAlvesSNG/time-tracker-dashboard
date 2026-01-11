@@ -1,6 +1,5 @@
 "use client";
 
-import { createElement } from "react";
 import { cn, getProductivityUI } from "@/lib/utils";
 
 export function UserMenu() {
@@ -8,7 +7,7 @@ export function UserMenu() {
   const email = "nathan.alves@synergroup.com.br";
   const productivity = 80;
 
-  const { icon, border } = getProductivityUI(productivity);
+  const { emoji, border } = getProductivityUI(productivity);
 
   return (
     <div
@@ -19,9 +18,9 @@ export function UserMenu() {
       )}
       title={`Produtividade: ${productivity}%`}
     >
-      <div className="flex items-center gap-2">
-        {icon && createElement(icon, { className: "size-8" })}
-      </div>
+      <span className="flex h-8 w-8 items-center justify-center text-[1.8rem] leading-none">
+        {emoji}
+      </span>
 
       <div className="hidden max-w-[160px] flex-col text-left lg:flex">
         <span className="truncate text-sm font-medium leading-none">
