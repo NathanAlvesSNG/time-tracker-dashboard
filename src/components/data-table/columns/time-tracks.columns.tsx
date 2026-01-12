@@ -1,8 +1,8 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
-import { TimeTrackingRow } from "@/types/time-tracking";
+import type { TimeTrackingRow } from "@/types/time-tracking";
 
 export const timeTracksColumns: ColumnDef<TimeTrackingRow>[] = [
   {

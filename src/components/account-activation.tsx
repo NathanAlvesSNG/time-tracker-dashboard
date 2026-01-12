@@ -1,11 +1,10 @@
 "use client";
 
+import { CheckCircle2, Lock, Mail, XCircle } from "lucide-react";
 import type React from "react";
-
 import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -13,8 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle2, XCircle, Mail, Lock } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type Step = "email" | "password" | "error";
 
@@ -61,6 +60,7 @@ export function AccountActivation() {
         setStep("error");
       }
     } catch (err) {
+      console.error(err);
       setError("Ocorreu um erro ao verificar o email. Tente novamente.");
     } finally {
       setIsLoading(false);
@@ -97,6 +97,7 @@ export function AccountActivation() {
         setError("Erro ao criar senha. Tente novamente.");
       }
     } catch (err) {
+      console.error(err);
       setError("Ocorreu um erro ao criar a senha. Tente novamente.");
     } finally {
       setIsLoading(false);

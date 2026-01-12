@@ -1,6 +1,6 @@
 "use client";
 
-import { Line, LineChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -11,19 +11,15 @@ import {
 } from "@/components/ui/card";
 
 import {
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
 } from "@/components/ui/chart";
-
-export type WorkedHoursChart = {
-  date: string;
-  workedHours: number;
-};
+import type { WorkedHoursPerDay } from "@/types/api";
 
 type Props = {
-  data: WorkedHoursChart[];
+  data: WorkedHoursPerDay[];
 };
 
 const chartConfig = {

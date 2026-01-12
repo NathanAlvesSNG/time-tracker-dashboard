@@ -14,7 +14,7 @@ export function UserMenu() {
       className={cn(
         "flex items-center gap-2 rounded-md border px-2 py-1",
         "transition-colors hover:bg-muted/50",
-        border
+        border,
       )}
       title={`Produtividade: ${productivity}%`}
     >

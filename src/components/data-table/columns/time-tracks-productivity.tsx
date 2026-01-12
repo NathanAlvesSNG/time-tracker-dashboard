@@ -1,7 +1,6 @@
-import { createElement } from "react";
-import type { ProductivityRow } from "@/types/time-tracking";
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { cn, getProductivityUI } from "@/lib/utils";
+import type { ProductivityRow } from "@/types/time-tracking";
 
 export const timeTracksColumnsProductivity: ColumnDef<ProductivityRow>[] = [
   {
@@ -34,7 +33,7 @@ export const timeTracksColumnsProductivity: ColumnDef<ProductivityRow>[] = [
           <span
             className={cn(
               "flex h-7 w-7 items-center justify-center rounded-md border text-base",
-              border
+              border,
             )}
             title={text}
           >

@@ -1,12 +1,12 @@
-import { cookies } from "next/headers";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import "./globals.css";
 
-import { cn } from "@/lib/utils";
+import { ActiveThemeProvider } from "@/components/active-theme";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { ActiveThemeProvider } from "@/components/active-theme";
 import { FiltersProvider } from "@/contexts/filters-context";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Dashboard - Time Tracker",
@@ -23,12 +23,12 @@ export default async function RootLayout({
   const isScaled = activeThemeValue?.endsWith("-scaled");
 
   return (
-    <html lang="PT-BR" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={cn(
           "bg-background overscroll-none font-sans antialiased",
           activeThemeValue ? `theme-${activeThemeValue}` : "",
-          isScaled ? "theme-scaled" : ""
+          isScaled ? "theme-scaled" : "",
         )}
       >
         <ThemeProvider

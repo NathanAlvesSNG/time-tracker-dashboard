@@ -1,16 +1,16 @@
+import type { TablerIcon } from "@tabler/icons-react";
 import React from "react";
-import { TablerIcon } from "@tabler/icons-react";
+import { useFilters } from "@/contexts/filters-context";
+import { sourceSystemConfig } from "@/lib/source-system";
+import { SourceSystem } from "@/types/api";
+import { Badge } from "./ui/badge";
 import {
   Card,
-  CardHeader,
   CardDescription,
-  CardTitle,
   CardFooter,
+  CardHeader,
+  CardTitle,
 } from "./ui/card";
-import { SourceSystem } from "@/types/api";
-import { sourceSystemConfig } from "@/lib/source-system";
-import { Badge } from "./ui/badge";
-import { useFilters } from "@/contexts/filters-context";
 
 type DashboardCardProps = {
   title: string;

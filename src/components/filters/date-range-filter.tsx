@@ -1,20 +1,18 @@
 "use client";
 
-import { type DateRange } from "react-day-picker";
-
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { CalendarIcon } from "lucide-react";
+import type { DateRange } from "react-day-picker";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { CalendarIcon } from "lucide-react";
-
 import { useFilters } from "@/contexts/filters-context";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 
 export type DateRangeFilter = {
   from: Date | undefined;
@@ -39,7 +37,7 @@ export function DateRangeFilter() {
             variant="outline"
             className={cn(
               "w-[260px] justify-start text-left font-normal",
-              !selected && "text-muted-foreground"
+              !selected && "text-muted-foreground",
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />

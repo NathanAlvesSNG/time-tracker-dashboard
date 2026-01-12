@@ -1,11 +1,13 @@
 "use client";
 
-import { DateRangeFilter } from "../filters/date-range-filter";
-import { SourceSystemFilter } from "../filters/source-system-filter";
-import { PersonFilter } from "../filters/person-filter";
 import type { SourceSystem } from "@/types/api";
-import { Separator } from "../ui/separator";
+import { DateRangeFilter } from "../filters/date-range-filter";
+import { PersonFilter } from "../filters/person-filter";
 import { ProjectFilter } from "../filters/project-filter";
+import { SourceSystemFilter } from "../filters/source-system-filter";
+import { Separator } from "../ui/separator";
+
+import { useFilters } from "@/contexts/filters-context";
 
 type DashboardFiltersProps = {
   sourceSystems?: SourceSystem[];
@@ -32,6 +34,8 @@ export function DashboardFilters({
 
   hasAll = true,
 }: DashboardFiltersProps) {
+  const { sourceSystem } = useFilters();
+
   const filters = [
     showDateRange && <DateRangeFilter key="date" />,
     showSourceSystem && sourceSystems.length > 0 && (
@@ -40,7 +44,7 @@ export function DashboardFilters({
     showPerson && persons.length > 0 && (
       <PersonFilter key="person" options={persons} hasAll={hasAll} />
     ),
-    showProject && projects.length > 0 && (
+    showProject && !(sourceSystem === "GLPI") && projects.length > 0 && (
       <ProjectFilter key="project" options={projects} />
     ),
   ].filter(Boolean);

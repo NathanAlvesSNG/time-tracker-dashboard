@@ -1,7 +1,7 @@
 "use client";
 
 import type { Icon } from "@tabler/icons-react";
-
+import Link from "next/link";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -21,25 +21,15 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupContent className="flex flex-col gap-2">
+      <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton
-                tooltip={item.title}
-                className="
-                  flex items-center gap-3
-                  py-2.5
-                  text-sm font-medium
-                "
-              >
-                {item.icon && (
-                  <item.icon className="h-5 w-5 shrink-0 text-muted-foreground" />
-                )}
-
-                <a href={item.url} className="flex-1 truncate">
-                  {item.title}
-                </a>
+              <SidebarMenuButton tooltip={item.title}>
+                {item.icon && <item.icon />}
+                <Link href={item.url}>
+                  <span>{item.title}</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

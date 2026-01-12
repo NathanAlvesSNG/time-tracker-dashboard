@@ -1,26 +1,24 @@
 "use client";
 
-import { BarChart, CartesianGrid, XAxis, YAxis, Bar } from "recharts";
-
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
 } from "@/components/ui/chart";
 
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-
-import { TotalHoursPerPersonPerProjectChart } from "@/types/api";
+import type { TotalHoursPerPersonPerProject } from "@/types/api";
 
 type Props = {
-  data: TotalHoursPerPersonPerProjectChart[];
+  data: TotalHoursPerPersonPerProject[];
 };
 
 export default function TotalHoursPerPersonPerProjectBarChart({ data }: Props) {
@@ -41,7 +39,7 @@ export default function TotalHoursPerPersonPerProjectBarChart({ data }: Props) {
 
       acc[item.person][item.project] = item.workedHours;
       return acc;
-    }, {})
+    }, {}),
   );
 
   return (

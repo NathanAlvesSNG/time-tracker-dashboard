@@ -11,15 +11,15 @@ import {
 } from "@/components/ui/card";
 
 import {
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
 } from "@/components/ui/chart";
-import { WorkedHoursPerProjectChart } from "@/types/api";
+import type { WorkedHoursPerProject } from "@/types/api";
 
 type Props = {
-  data: WorkedHoursPerProjectChart[];
+  data: WorkedHoursPerProject[];
 };
 
 const chartConfig = {

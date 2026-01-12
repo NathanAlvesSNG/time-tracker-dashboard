@@ -10,13 +10,13 @@ import {
 } from "recharts";
 
 import {
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
 } from "@/components/ui/chart";
 
-import { DailyHours } from "@/types/api";
+import type { DailyHours } from "@/types/api";
 import {
   Card,
   CardContent,

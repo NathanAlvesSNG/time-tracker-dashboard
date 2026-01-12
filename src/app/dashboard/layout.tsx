@@ -1,5 +1,5 @@
-import { Header } from "@/components/layout/header";
 import { redirect } from "next/navigation";
+import { Header } from "@/components/layout/header";
 
 export default function DashboardLayout({
   children,

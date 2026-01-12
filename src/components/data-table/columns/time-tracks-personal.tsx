@@ -1,13 +1,18 @@
+import type { ColumnDef } from "@tanstack/react-table";
 import type { DateRangeFilter } from "@/components/filters/date-range-filter";
 import { Badge } from "@/components/ui/badge";
-import { TimeTrackingPersonalRow } from "@/types/time-tracking";
-import { ColumnDef } from "@tanstack/react-table";
+import type { TimeTrackingPersonalRow } from "@/types/time-tracking";
 
 function startOfDay(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
 export const timeTracksColumnsPersonal: ColumnDef<TimeTrackingPersonalRow>[] = [
+  {
+    accessorKey: "person",
+    header: "Pessoa",
+    filterFn: "equalsString",
+  },
   {
     accessorKey: "startTime",
     header: "Início",

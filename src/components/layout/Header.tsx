@@ -1,8 +1,8 @@
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { ThemeSelector } from "../theme-selector";
 import { ModeToggle } from "../ui/mode-toggle";
 import { UserMenu } from "./user-menu";
-import { ThemeSelector } from "../theme-selector";
 
 type HeaderProps = {
   title: string;

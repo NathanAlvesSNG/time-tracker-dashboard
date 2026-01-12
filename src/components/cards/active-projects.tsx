@@ -1,5 +1,5 @@
-import DashboardCard from "../dashboard-card";
 import { IconFolder } from "@tabler/icons-react";
+import DashboardCard from "../dashboard-card";
 
 export default function ActiveProjectsCard() {
   return (

@@ -18,16 +18,16 @@ import {
 } from "@/components/ui/card";
 
 import {
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
 } from "@/components/ui/chart";
 
-import { ProductivityPerDayChart } from "@/types/api";
+import type { ProductivityPerDay } from "@/types/api";
 
 type Props = {
-  data: ProductivityPerDayChart[];
+  data: ProductivityPerDay[];
 };
 
 const chartConfig = {

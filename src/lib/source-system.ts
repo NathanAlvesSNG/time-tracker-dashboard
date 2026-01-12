@@ -1,9 +1,9 @@
-import { BadgeProps } from "@/components/ui/badge";
-import { SourceSystem } from "@/types/api";
-import { IconType } from "react-icons/lib";
-import { VscAzureDevops } from "react-icons/vsc";
 import { FaTicket } from "react-icons/fa6";
 import { IoLayers } from "react-icons/io5";
+import type { IconType } from "react-icons/lib";
+import { VscAzureDevops } from "react-icons/vsc";
+import type { BadgeProps } from "@/components/ui/badge";
+import type { SourceSystem } from "@/types/api";
 
 export const sourceSystemConfig: Record<
   SourceSystem,

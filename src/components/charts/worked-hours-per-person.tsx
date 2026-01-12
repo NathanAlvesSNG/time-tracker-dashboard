@@ -1,22 +1,21 @@
 "use client";
 
-import { WorkedHoursPerPerson } from "@/types/api";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "../ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import type { WorkedHoursPerPerson } from "@/types/api";
 
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
 } from "../ui/card";
-
-import { BarChart, Bar, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "../ui/chart";
 
 type Props = {
   data: WorkedHoursPerPerson[];

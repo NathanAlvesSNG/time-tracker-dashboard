@@ -1,26 +1,25 @@
 "use client";
 
-import { AppSidebar } from "@/components/layout/sidebar";
-import { DashboardGeneralCards } from "@/components/dashboard-general-cards";
-import { timeTracksColumns } from "@/components/data-table/columns/time-tracks.columns";
-import { DataTable } from "@/components/data-table/data-table";
-import { Header } from "@/components/layout/header";
-
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { TimeTrackingRow } from "@/types/time-tracking";
-import { DashboardFilters } from "@/components/layout/dashboard-filters";
-import { useEffect, useMemo, useState } from "react";
 import {
-  ColumnFiltersState,
+  type ColumnFiltersState,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
+  type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import { useEffect, useMemo, useState } from "react";
+import { DashboardGeneralCards } from "@/components/dashboard-general-cards";
+import { timeTracksColumns } from "@/components/data-table/columns/time-tracks.columns";
+import { DataTable } from "@/components/data-table/data-table";
+import { DashboardFilters } from "@/components/layout/dashboard-filters";
+import { Header } from "@/components/layout/header";
+import { AppSidebar } from "@/components/layout/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useFilters } from "@/contexts/filters-context";
-import { SourceSystem } from "@/types/api";
+import type { SourceSystem } from "@/types/api";
+import type { TimeTrackingRow } from "@/types/time-tracking";
 
 export default function Page() {
   const { sourceSystem, person } = useFilters();
@@ -82,11 +81,11 @@ export default function Page() {
 
   const sourceSystemOptions: SourceSystem[] = useMemo(() => {
     return Array.from(new Set(apiMock.map((item) => item.sourceSystem))).sort();
-  }, [apiMock]);
+  }, []);
 
   const personOptions: string[] = useMemo(() => {
     return Array.from(new Set(apiMock.map((item) => item.person))).sort();
-  }, [apiMock]);
+  }, []);
 
   return (
     <SidebarProvider

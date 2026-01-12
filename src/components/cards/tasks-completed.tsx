@@ -1,5 +1,5 @@
-import DashboardCard from "../dashboard-card";
 import { IconCheck } from "@tabler/icons-react";
+import DashboardCard from "../dashboard-card";
 
 export default function TasksCompletedCard() {
   return (

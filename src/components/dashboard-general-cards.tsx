@@ -1,18 +1,7 @@
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
-
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import TasksInProgressCard from "./cards/tasks-in-progress";
-import TasksCompletedCard from "./cards/tasks-completed";
-import ActiveUsersCard from "./cards/active-users";
 import ActiveProjectsCard from "./cards/active-projects";
+import ActiveUsersCard from "./cards/active-users";
+import TasksCompletedCard from "./cards/tasks-completed";
+import TasksInProgressCard from "./cards/tasks-in-progress";
 import TotalRunningTimeCard from "./cards/total-running-time";
 
 export function DashboardGeneralCards() {

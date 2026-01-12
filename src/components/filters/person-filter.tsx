@@ -22,8 +22,8 @@ export function PersonFilter({ options, hasAll = true }: Props) {
   const defaultSelectValue = hasAll
     ? "all"
     : options.length > 0
-    ? options[0]
-    : undefined;
+      ? options[0]
+      : undefined;
 
   return (
     <div className="flex flex-col gap-2">

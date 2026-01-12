@@ -1,10 +1,16 @@
 "use client";
 
-import * as React from "react";
-import { IconDashboard, IconListDetails, IconUser } from "@tabler/icons-react";
-
+import {
+  IconDashboard,
+  IconLayoutDashboard,
+  IconListDetails,
+  IconUser,
+  IconUsers,
+} from "@tabler/icons-react";
+import Image from "next/image";
+import type * as React from "react";
+import { NavAdmin } from "@/components/nav-admin";
 import { NavMain } from "@/components/nav-main";
-
 import {
   Sidebar,
   SidebarContent,
@@ -13,31 +19,43 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-
 import Logo from "@/images/logo.svg";
-import Image from "next/image";
 
 const data = {
   navMain: [
     {
       title: "Geral",
       url: "/dashboard",
-      icon: IconDashboard,
+      icon: IconLayoutDashboard,
     },
     {
       title: "Individual",
       url: "/dashboard/me",
       icon: IconUser,
     },
+  ],
+
+  navAdmin: [
     {
-      title: "Administrativo",
+      name: "Visão Geral",
       url: "/dashboard/admin",
+      icon: IconDashboard,
+    },
+    {
+      name: "Produtividade",
+      url: "/dashboard/admin/productivity",
       icon: IconListDetails,
+    },
+    {
+      name: "Colaboradores",
+      url: "/dashboard/admin/users",
+      icon: IconUsers,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const isAdmin = true;
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -59,6 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
+        {isAdmin && <NavAdmin items={data.navAdmin} />}
       </SidebarContent>
     </Sidebar>
   );

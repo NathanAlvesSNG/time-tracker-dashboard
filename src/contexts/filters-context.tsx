@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { SourceSystem } from "@/types/api";
 import type { DateRangeFilter } from "@/components/filters/date-range-filter";
+import type { SourceSystem } from "@/types/api";
 
 type FiltersContextType = {
   sourceSystem?: SourceSystem;
@@ -19,12 +19,12 @@ const FiltersContext = createContext<FiltersContextType | null>(null);
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const [sourceSystem, setSourceSystem] = useState<SourceSystem | undefined>(
-    undefined
+    undefined,
   );
   const [person, setPerson] = useState<string | undefined>(undefined);
   const [project, setProject] = useState<string | undefined>(undefined);
   const [dateRange, setDateRange] = useState<DateRangeFilter | undefined>(
-    undefined
+    undefined,
   );
 
   return (

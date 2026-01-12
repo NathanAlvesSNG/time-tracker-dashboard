@@ -1,4 +1,4 @@
-import { SourceSystem, TaskStatus } from "./api";
+import type { SourceSystem, TaskStatus } from "./api";
 
 export type TimeTrackingRow = {
   person: string;
@@ -10,6 +10,7 @@ export type TimeTrackingRow = {
 };
 
 export type TimeTrackingPersonalRow = {
+  person: string;
   startTime: string;
   project: string;
   task: string;
