@@ -1,11 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { DateRangeFilter } from "@/components/filters/date-range-filter";
 import { Badge } from "@/components/ui/badge";
 import type { TimeTrackingPersonalRow } from "@/types/time-tracking";
-
-function startOfDay(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
 
 export const timeTracksColumnsPersonal: ColumnDef<TimeTrackingPersonalRow>[] = [
   {

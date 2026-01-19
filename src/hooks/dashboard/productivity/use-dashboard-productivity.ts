@@ -1,6 +1,6 @@
 import { useProductivity } from "@/hooks/use-productivity";
 import { useDailyProductivity } from "@/hooks/use-daily-productivity";
-import { DashboardFilters } from "../types";
+import type { DashboardFilters } from "../types";
 import { useUsersProductivity } from "@/hooks/use-users-productivity";
 
 export function useDashboardProductivity(

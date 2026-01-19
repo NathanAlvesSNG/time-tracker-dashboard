@@ -16,7 +16,7 @@ type WorkedHoursPerPerson = {
 
 export function useWorkedHoursPerPerson(
   { person, sourceSystem, startTime, endTime, project }: Filters,
-  options?: { enabled?: boolean }
+  options?: { enabled?: boolean },
 ) {
   const query = useQuery<WorkedHoursPerPerson[]>({
     queryKey: [

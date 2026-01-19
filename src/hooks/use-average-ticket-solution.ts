@@ -13,7 +13,7 @@ type AverageTicketSolution = {
 
 export function useAverageTicketSolution(
   filters: Filters,
-  options?: { enabled?: boolean }
+  options?: { enabled?: boolean },
 ) {
   const query = useQuery<AverageTicketSolution>({
     queryKey: [

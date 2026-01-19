@@ -16,7 +16,7 @@ type useSlaTicket = {
 
 export function useSlaTicket(
   filters: Filters,
-  options?: { enabled?: boolean }
+  options?: { enabled?: boolean },
 ) {
   const query = useQuery<useSlaTicket>({
     queryKey: [

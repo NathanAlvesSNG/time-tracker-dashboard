@@ -17,7 +17,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import type { WorkedHoursPerDay } from "@/types/api";
-import { formatHoursToHHMM } from "@/lib/utils";
 
 type Props = {
   data: WorkedHoursPerDay[];

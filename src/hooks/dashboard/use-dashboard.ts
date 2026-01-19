@@ -1,4 +1,4 @@
-import { DashboardFilters, DashboardDataOptions } from "./types";
+import type { DashboardFilters, DashboardDataOptions } from "./types";
 import { useDashboardProductivity } from "./productivity/use-dashboard-productivity";
 import { useDashboardWorkedHours } from "./worked-hours/use-dashboard-worked-hours";
 import { useDashboardOverview } from "./overview/useDashboardOverview";

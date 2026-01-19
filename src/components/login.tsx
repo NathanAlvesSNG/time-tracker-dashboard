@@ -37,7 +37,7 @@ export function Login() {
 
       if (!data?.token || !data?.user) {
         setError(
-          "Erro ao fazer login. Verifique sua conexão e tente novamente."
+          "Erro ao fazer login. Verifique sua conexão e tente novamente.",
         );
         return;
       }
@@ -69,7 +69,7 @@ export function Login() {
       }
 
       setError(
-        "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente."
+        "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.",
       );
     } finally {
       setIsLoading(false);

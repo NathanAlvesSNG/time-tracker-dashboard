@@ -1,6 +1,5 @@
-import { mapSourceSystemToApi } from "@/mappers/source-system.mapper";
 import { getWorkedHoursDay } from "@/services/dashboard.service";
-import { WorkedHoursPerDay } from "@/types/api";
+import type { WorkedHoursPerDay } from "@/types/api";
 import { useQuery } from "@tanstack/react-query";
 
 type Filters = {
@@ -13,7 +12,7 @@ type Filters = {
 
 export function useWorkedHoursDay(
   filters: Filters,
-  options?: { enabled?: boolean }
+  options?: { enabled?: boolean },
 ) {
   const query = useQuery<WorkedHoursPerDay[]>({
     queryKey: [
