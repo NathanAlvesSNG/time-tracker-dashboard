@@ -16,18 +16,20 @@ export const timeTracksColumnsPersonal: ColumnDef<TimeTrackingPersonalRow>[] = [
   {
     accessorKey: "startTime",
     header: "Início",
-    cell: ({ getValue }) =>
-      new Date(getValue<string>()).toLocaleString("pt-BR"),
-    filterFn: (row, columnId, value: DateRangeFilter) => {
-      if (!value) return true;
+    cell: ({ getValue }) => {
+      const value = getValue<string>();
 
-      const cellDate = startOfDay(new Date(row.getValue(columnId)));
+      const localDate = new Date(value.replace("Z", ""));
 
-      const from = value.from ? startOfDay(value.from) : undefined;
-      const to = value.to ? startOfDay(value.to) : undefined;
+      return localDate.toLocaleString("pt-BR");
+    },
+    filterFn: (row, columnId, value) => {
+      if (!value?.from && !value?.to) return true;
 
-      if (from && cellDate < from) return false;
-      if (to && cellDate > to) return false;
+      const rowDate = new Date(row.getValue(columnId));
+
+      if (value.from && rowDate < value.from) return false;
+      if (value.to && rowDate > value.to) return false;
 
       return true;
     },
@@ -43,6 +45,12 @@ export const timeTracksColumnsPersonal: ColumnDef<TimeTrackingPersonalRow>[] = [
   {
     accessorKey: "duration",
     header: "Duração",
+    cell: ({ getValue }) => {
+      const seconds = getValue<number>();
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      return `${h}h ${m}m`;
+    },
   },
   {
     accessorKey: "status",

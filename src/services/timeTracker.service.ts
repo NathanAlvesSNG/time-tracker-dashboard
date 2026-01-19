@@ -1,9 +1,15 @@
-import type { DashboardFilters, TimeTracks } from "@/types/api";
 import { api } from "./api";
 
-export const getTimeTracks = async (
-  filters?: DashboardFilters,
-): Promise<TimeTracks[]> => {
-  const response = await api.get("/timetracks", { params: filters });
-  return response.data;
-};
+export async function getTimeTracks(params?: {
+  person?: string;
+  sourceSystem?: string;
+  startTime?: string;
+  endTime?: string;
+  status?: string;
+  project?: string;
+}) {
+  const { data } = await api.get("/timetracks", {
+    params,
+  });
+  return data;
+}

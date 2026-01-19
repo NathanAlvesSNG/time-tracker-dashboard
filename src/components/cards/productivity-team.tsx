@@ -1,13 +1,18 @@
 import { IconTrophy } from "@tabler/icons-react";
 import DashboardCard from "../dashboard-card";
 
-export default function ProductivityTeamCard() {
+type Props = {
+  score: number;
+  label: string;
+};
+
+export default function ProductivityTeamCard({ score, label }: Props) {
   return (
     <DashboardCard
       title="Produtividade do Time"
       description="Comparação da produtividade entre você e seu time."
       icon={IconTrophy}
-      value={"Muito acima da média"}
+      value={label}
     />
   );
 }

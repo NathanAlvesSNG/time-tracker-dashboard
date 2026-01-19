@@ -15,6 +15,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+import { createPassword, getUserByEmail } from "@/services/users.service";
+import { useRouter } from "next/navigation";
+
 type Step = "email" | "password" | "error";
 
 interface PasswordRequirement {
@@ -29,6 +32,8 @@ export function AccountActivation() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   const passwordRequirements: PasswordRequirement[] = [
     { label: "Mínimo de 8 caracteres", met: password.length >= 8 },
@@ -45,20 +50,21 @@ export function AccountActivation() {
     setIsLoading(true);
 
     try {
-      // TODO: Simulação de chamada API - substituir pela chamada real
-      const response = await fetch("/api/verify-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      const data = await getUserByEmail(email);
 
-      const data = await response.json();
+      console.log(data);
 
-      if (data.exists) {
-        setStep("password");
-      } else {
+      if (!data.exists) {
         setStep("error");
+        return;
       }
+
+      if (data.hasPassword) {
+        setError("O email ja possui uma senha cadastrada.");
+        return;
+      }
+
+      setStep("password");
     } catch (err) {
       console.error(err);
       setError("Ocorreu um erro ao verificar o email. Tente novamente.");
@@ -69,6 +75,7 @@ export function AccountActivation() {
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
     if (!isPasswordValid) {
       setError("Por favor, atenda todos os requisitos da senha.");
@@ -84,17 +91,12 @@ export function AccountActivation() {
     setIsLoading(true);
 
     try {
-      // TODO: Simulação de chamada API - substituir pela chamada real
-      const response = await fetch("/api/activate-account", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const data = await createPassword(email, password);
 
-      if (response.ok) {
-        window.location.href = "/login";
+      if (data.success) {
+        router.push("/login");
       } else {
-        setError("Erro ao criar senha. Tente novamente.");
+        setError(data.error ?? "Ocorreu um erro ao criar a senha.");
       }
     } catch (err) {
       console.error(err);
@@ -123,7 +125,6 @@ export function AccountActivation() {
         </CardHeader>
 
         <CardContent>
-          {/* Etapa 1: Verificação de Email */}
           {step === "email" && (
             <form onSubmit={handleEmailSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -150,6 +151,16 @@ export function AccountActivation() {
                 </Alert>
               )}
 
+              <div className="flex items-center justify-end gap-2">
+                <Button
+                  variant="outline"
+                  className="w-full border"
+                  onClick={() => router.push("/login")}
+                >
+                  Voltar
+                </Button>
+              </div>
+
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? (
                   <>
@@ -163,7 +174,6 @@ export function AccountActivation() {
             </form>
           )}
 
-          {/* Etapa 2: Criação de Senha */}
           {step === "password" && (
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -192,7 +202,6 @@ export function AccountActivation() {
                 />
               </div>
 
-              {/* Requisitos da senha */}
               <div className="space-y-2 rounded-lg bg-muted/50 p-3">
                 <p className="text-sm font-medium text-muted-foreground">
                   Requisitos da senha:
@@ -259,7 +268,6 @@ export function AccountActivation() {
             </form>
           )}
 
-          {/* Estado de Erro: Email não encontrado */}
           {step === "error" && (
             <div className="space-y-4">
               <Alert>

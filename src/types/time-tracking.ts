@@ -6,7 +6,7 @@ export type TimeTrackingRow = {
   task: string;
   startTime: string;
   duration: number;
-  sourceSystem: "Azure DevOps" | "GLPI";
+  sourceSystem: "Azure DevOps" | "IZIT";
 };
 
 export type TimeTrackingPersonalRow = {

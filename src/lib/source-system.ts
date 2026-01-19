@@ -20,8 +20,8 @@ export const sourceSystemConfig: Record<
     className: "text-blue-600 border-blue-600",
     icon: VscAzureDevops,
   },
-  GLPI: {
-    label: "GLPI",
+  IZIT: {
+    label: "IZIT",
     variant: "outline",
     className: "text-yellow-600 border-yellow-600",
     icon: FaTicket,

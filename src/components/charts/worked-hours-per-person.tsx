@@ -29,6 +29,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function WorkedHoursPerPersonBarChart({ data }: Props) {
+  const isEmpty = !data || data.length === 0;
+
   return (
     <Card>
       <CardHeader>
@@ -37,48 +39,54 @@ export default function WorkedHoursPerPersonBarChart({ data }: Props) {
       </CardHeader>
 
       <CardContent className="p-0">
-        <ChartContainer config={chartConfig}>
-          <BarChart
-            data={data}
-            layout="vertical"
-            margin={{
-              top: 8,
-              right: 24,
-              left: 24,
-              bottom: 8,
-            }}
-          >
-            <CartesianGrid horizontal={false} />
+        {isEmpty ? (
+          <div className="flex items-center justify-center text-sm text-muted-foreground">
+            Nenhum dado encontrado para os filtros selecionados
+          </div>
+        ) : (
+          <ChartContainer config={chartConfig}>
+            <BarChart
+              data={data}
+              layout="vertical"
+              margin={{
+                top: 8,
+                right: 24,
+                left: 24,
+                bottom: 8,
+              }}
+            >
+              <CartesianGrid horizontal={false} />
 
-            <XAxis
-              type="number"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(v) => `${v}h`}
-            />
+              <XAxis
+                type="number"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickFormatter={(v) => `${v}h`}
+              />
 
-            <YAxis
-              type="category"
-              dataKey="person"
-              tickLine={false}
-              axisLine={false}
-              width={120}
-            />
+              <YAxis
+                type="category"
+                dataKey="person"
+                tickLine={false}
+                axisLine={false}
+                width={120}
+              />
 
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
-            />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="dot" />}
+              />
 
-            <Bar
-              dataKey="workedHours"
-              fill="var(--chart-1)"
-              radius={[0, 4, 4, 0]}
-              barSize={28}
-            />
-          </BarChart>
-        </ChartContainer>
+              <Bar
+                dataKey="workedHours"
+                fill="var(--chart-1)"
+                radius={[0, 4, 4, 0]}
+                barSize={28}
+              />
+            </BarChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );

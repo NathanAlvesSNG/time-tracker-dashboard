@@ -1,11 +1,16 @@
 import { IconStopwatch } from "@tabler/icons-react";
 import DashboardCard from "../dashboard-card";
+import { formatHoursToHMS } from "@/lib/utils";
 
-export default function HoursWorkedCard() {
+type Props = {
+  workedHours: number;
+};
+
+export default function HoursWorkedCard({ workedHours }: Props) {
   return (
     <DashboardCard
       title="Horas Trabalhadas"
-      value="00:10:35"
+      value={formatHoursToHMS(workedHours)}
       icon={IconStopwatch}
       description="Tempo total de execução de todas as tarefas (hh:mm:ss)"
     />

@@ -16,12 +16,16 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+import { login } from "@/services/users.service";
+import { useRouter } from "next/navigation";
+
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,23 +33,44 @@ export function Login() {
     setIsLoading(true);
 
     try {
-      // Simulação de chamada API - substituir pela chamada real
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, rememberMe }),
-      });
+      const data = await login(email, password);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Redirecionar para dashboard ou home
-        window.location.href = "/dashboard";
-      } else {
-        setError(data.message || "Email ou senha incorretos. Tente novamente.");
+      if (!data?.token || !data?.user) {
+        setError(
+          "Erro ao fazer login. Verifique sua conexão e tente novamente."
+        );
+        return;
       }
-    } catch (err) {
-      setError("Erro ao fazer login. Verifique sua conexão e tente novamente.");
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      router.push("/dashboard");
+    } catch (err: any) {
+      if (err?.response) {
+        const status = err.response.status;
+        const message =
+          err.response.data?.message ||
+          err.response.data?.error ||
+          "Erro ao realizar login.";
+
+        if (status === 401) {
+          setError(message);
+          return;
+        }
+
+        if (status === 500) {
+          setError("Erro interno no servidor. Tente novamente mais tarde.");
+          return;
+        }
+
+        setError(message);
+        return;
+      }
+
+      setError(
+        "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -100,21 +125,6 @@ export function Login() {
                   disabled={isLoading}
                 />
               </div>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="remember"
-                checked={rememberMe}
-                onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                disabled={isLoading}
-              />
-              <Label
-                htmlFor="remember"
-                className="text-sm font-normal cursor-pointer select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Manter conectado
-              </Label>
             </div>
 
             {error && (

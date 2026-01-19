@@ -13,19 +13,32 @@ import {
 } from "@/components/ui/popover";
 import { useFilters } from "@/contexts/filters-context";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 export type DateRangeFilter = {
   from: Date | undefined;
   to: Date | undefined;
 };
 
-export function DateRangeFilter() {
+type DateRangeFilterProps = {
+  defaultValue?: DateRangeFilter;
+};
+
+export function DateRangeFilter({ defaultValue }: DateRangeFilterProps) {
   const { dateRange, setDateRange } = useFilters();
 
-  const selected: DateRange | undefined =
-    dateRange?.from || dateRange?.to
-      ? { from: dateRange?.from, to: dateRange?.to }
-      : undefined;
+  useEffect(() => {
+    if (!defaultValue) return;
+
+    if (!dateRange?.from && !dateRange?.to) {
+      setDateRange({
+        from: defaultValue.from,
+        to: defaultValue.to,
+      });
+    }
+  }, [defaultValue, setDateRange]);
+
+  const selected = dateRange;
 
   return (
     <div className="flex flex-col gap-2">
@@ -37,7 +50,7 @@ export function DateRangeFilter() {
             variant="outline"
             className={cn(
               "w-[260px] justify-start text-left font-normal",
-              !selected && "text-muted-foreground",
+              !selected && "text-muted-foreground"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -74,13 +87,6 @@ export function DateRangeFilter() {
           />
         </PopoverContent>
       </Popover>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => setDateRange({ from: undefined, to: undefined })}
-      >
-        Limpar
-      </Button>
     </div>
   );
 }

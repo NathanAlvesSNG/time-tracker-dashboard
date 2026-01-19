@@ -22,6 +22,7 @@ type Props = {
 };
 
 export default function TotalHoursPerPersonPerProjectBarChart({ data }: Props) {
+  const isEmpty = !data || data.length === 0;
   const projects = Array.from(new Set(data.map((d) => d.project)));
   const chartConfig: ChartConfig = projects.reduce((acc, project, index) => {
     acc[project] = {
@@ -39,7 +40,7 @@ export default function TotalHoursPerPersonPerProjectBarChart({ data }: Props) {
 
       acc[item.person][item.project] = item.workedHours;
       return acc;
-    }, {}),
+    }, {})
   );
 
   return (
@@ -52,42 +53,48 @@ export default function TotalHoursPerPersonPerProjectBarChart({ data }: Props) {
       </CardHeader>
 
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{ top: 16, right: 16, left: 8, bottom: 8 }}
-          >
-            <CartesianGrid vertical={false} />
+        {isEmpty ? (
+          <div className="flex items-center justify-center text-sm text-muted-foreground">
+            Nenhum dado encontrado para os filtros selecionados
+          </div>
+        ) : (
+          <ChartContainer config={chartConfig}>
+            <BarChart
+              accessibilityLayer
+              data={chartData}
+              margin={{ top: 16, right: 16, left: 8, bottom: 8 }}
+            >
+              <CartesianGrid vertical={false} />
 
-            <XAxis
-              dataKey="person"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={10}
-            />
-
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              tickFormatter={(value) => `${value}h`}
-            />
-
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
-            />
-
-            {projects.map((project) => (
-              <Bar
-                key={project}
-                dataKey={project}
-                fill={`var(--chart-${projects.indexOf(project) + 1})`}
-                radius={4}
+              <XAxis
+                dataKey="person"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={10}
               />
-            ))}
-          </BarChart>
-        </ChartContainer>
+
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `${value}h`}
+              />
+
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="dashed" />}
+              />
+
+              {projects.map((project) => (
+                <Bar
+                  key={project}
+                  dataKey={project}
+                  fill={`var(--chart-${projects.indexOf(project) + 1})`}
+                  radius={4}
+                />
+              ))}
+            </BarChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );

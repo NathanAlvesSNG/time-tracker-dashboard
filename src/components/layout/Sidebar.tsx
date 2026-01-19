@@ -20,6 +20,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Logo from "@/images/logo.svg";
+import { useAuth } from "@/contexts/auth-context";
 
 const data = {
   navMain: [
@@ -55,7 +56,10 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const isAdmin = true;
+  const { user } = useAuth();
+
+  const isAdmin = user?.role === "admin";
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

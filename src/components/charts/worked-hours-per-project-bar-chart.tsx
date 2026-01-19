@@ -34,6 +34,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function WorkedHoursPerProjectBarChart({ data }: Props) {
+  const isEmpty = !data || data.length === 0;
+
   return (
     <Card>
       <CardHeader>
@@ -44,39 +46,45 @@ export function WorkedHoursPerProjectBarChart({ data }: Props) {
       </CardHeader>
 
       <CardContent className="p-0">
-        <ChartContainer config={chartConfig}>
-          <BarChart
-            data={data}
-            margin={{ top: 16, right: 16, left: 8, bottom: 8 }}
-          >
-            <CartesianGrid vertical={false} />
+        {isEmpty ? (
+          <div className="flex items-center justify-center text-sm text-muted-foreground">
+            Nenhum dado encontrado para os filtros selecionados
+          </div>
+        ) : (
+          <ChartContainer config={chartConfig}>
+            <BarChart
+              data={data}
+              margin={{ top: 16, right: 16, left: 8, bottom: 8 }}
+            >
+              <CartesianGrid vertical={false} />
 
-            <XAxis
-              dataKey="project"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-            />
+              <XAxis
+                dataKey="project"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+              />
 
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(v) => `${v}h`}
-            />
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickFormatter={(v) => `${v}h`}
+              />
 
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
-            />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="dot" />}
+              />
 
-            <Bar
-              dataKey="workedHours"
-              radius={[6, 6, 0, 0]}
-              fill="var(--primary)"
-            />
-          </BarChart>
-        </ChartContainer>
+              <Bar
+                dataKey="workedHours"
+                radius={[6, 6, 0, 0]}
+                fill="var(--primary)"
+              />
+            </BarChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );

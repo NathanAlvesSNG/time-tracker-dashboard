@@ -32,8 +32,13 @@ export const timeTracksColumns: ColumnDef<TimeTrackingRow>[] = [
 
       return true;
     },
-    cell: ({ getValue }) =>
-      new Date(getValue<string>()).toLocaleString("pt-BR"),
+    cell: ({ getValue }) => {
+      const value = getValue<string>();
+
+      const localDate = new Date(value.replace("Z", ""));
+
+      return localDate.toLocaleString("pt-BR");
+    },
   },
   {
     accessorKey: "duration",

@@ -20,6 +20,8 @@ type DashboardFiltersProps = {
   showProject?: boolean;
 
   hasAll?: boolean;
+
+  defaultValue?: DateRangeFilter;
 };
 
 export function DashboardFilters({
@@ -33,18 +35,20 @@ export function DashboardFilters({
   showProject = false,
 
   hasAll = true,
+
+  defaultValue,
 }: DashboardFiltersProps) {
   const { sourceSystem } = useFilters();
 
   const filters = [
-    showDateRange && <DateRangeFilter key="date" />,
+    showDateRange && <DateRangeFilter defaultValue={defaultValue} key="date" />,
     showSourceSystem && sourceSystems.length > 0 && (
       <SourceSystemFilter key="source" options={sourceSystems} />
     ),
     showPerson && persons.length > 0 && (
       <PersonFilter key="person" options={persons} hasAll={hasAll} />
     ),
-    showProject && !(sourceSystem === "GLPI") && projects.length > 0 && (
+    showProject && !(sourceSystem === "IZIT") && projects.length > 0 && (
       <ProjectFilter key="project" options={projects} />
     ),
   ].filter(Boolean);

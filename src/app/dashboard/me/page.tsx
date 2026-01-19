@@ -6,6 +6,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  PaginationState,
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
@@ -20,95 +21,68 @@ import { Header } from "@/components/layout/header";
 import { AppSidebar } from "@/components/layout/sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useFilters } from "@/contexts/filters-context";
-import type { DailyHours, SourceSystem } from "@/types/api";
-import type { TimeTrackingPersonalRow } from "@/types/time-tracking";
+import { AuthGuard } from "@/components/auth/auth-guard";
+import { startOfMonth, subMonths } from "date-fns";
+import { HeaderSkeleton } from "@/components/skeleton-header";
+import DashboardSkeleton from "@/components/dashboard-skeleton";
+import { useDashboard } from "@/hooks/dashboard/use-dashboard";
+import { useFilterOptions } from "@/hooks/use-filter-options";
 
 export default function Page() {
   const { sourceSystem, dateRange } = useFilters();
+  const { data: filterOptions, isLoading: isLoadingFilterOptions } =
+    useFilterOptions();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
-  const data: DailyHours[] = [
-    { date: "2024-06-01", available: 5, worked: 4 },
-    { date: "2024-06-02", available: 6, worked: 5 },
-    { date: "2024-06-03", available: 4, worked: 3 },
-    { date: "2024-06-04", available: 7, worked: 6 },
-    { date: "2024-06-05", available: 5, worked: 5 },
-    { date: "2024-06-06", available: 6, worked: 4 },
-    { date: "2024-06-07", available: 5, worked: 5 },
-  ];
+  const startTime = dateRange?.from
+    ? dateRange.from.toISOString()
+    : startOfMonth(subMonths(new Date(), 1)).toISOString();
 
-  const productivityData = [
-    { date: "2024-06-01", productivity: 80 },
-    { date: "2024-06-02", productivity: 83 },
-    { date: "2024-06-03", productivity: 85 },
-    { date: "2024-06-04", productivity: 90 },
-    { date: "2024-06-05", productivity: 88 },
-  ];
+  const endTime = dateRange?.to
+    ? dateRange.to.toISOString()
+    : startOfMonth(new Date()).toISOString();
 
-  const dataTableData: TimeTrackingPersonalRow[] = [
+  const {
+    personal: { userTasks: userTasks, score: userScore },
+    productivity: { productivity: productivityData, daily: dailyProductivity },
+    isLoading,
+  } = useDashboard(
+    { sourceSystem, startTime, endTime },
     {
-      startTime: "2024-06-01T09:00:00.000Z",
-      project: "Projeto A",
-      task: "Tarefa 1",
-      duration: 120,
-      status: "1",
-      sourceSystem: "Azure DevOps",
-      person: "Nathan",
+      loadPersonal: true,
+      loadProductivity: true,
+      loadOverview: false,
+      loadSla: false,
+      loadWorkedHours: false,
     },
-    {
-      startTime: "2024-06-02T10:00:00.000Z",
-      project: "Projeto B",
-      task: "Tarefa 2",
-      duration: 180,
-      status: "2",
-      sourceSystem: "Azure DevOps",
-      person: "Nathan",
-    },
-    {
-      startTime: "2024-06-03T11:00:00.000Z",
-      project: "Projeto C",
-      task: "Tarefa 3",
-      duration: 240,
-      status: "3",
-      sourceSystem: "GLPI",
-      person: "Isabela",
-    },
-    {
-      startTime: "2026-01-03T12:00:00.000Z",
-      project: "Projeto D",
-      task: "Tarefa 4",
-      duration: 300,
-      status: "3",
-      sourceSystem: "Azure DevOps",
-      person: "Isabela",
-    },
-    {
-      startTime: "2026-01-02T13:00:00.000Z",
-      project: "Projeto E",
-      task: "Tarefa 5",
-      duration: 360,
-      status: "1",
-      sourceSystem: "GLPI",
-      person: "Gabriel",
-    },
-    {
-      startTime: "2026-01-02T14:00:00.000Z",
-      project: "Projeto F",
-      task: "Tarefa 6",
-      duration: 420,
-      status: "2",
-      sourceSystem: "GLPI",
-      person: "Matheus",
-    },
-  ];
+  );
+
+  const sourceSystemOptions = useMemo(() => {
+    if (!filterOptions?.services) return [];
+
+    return Array.from(
+      new Set(
+        filterOptions.services.map((s) =>
+          s.sourceSystem === "Azure DevOps" ? "Azure DevOps" : "IZIT",
+        ),
+      ),
+    ).sort();
+  }, [filterOptions]);
+
+  const tableData = useMemo(() => userTasks || [], [userTasks]);
 
   const table = useReactTable({
-    data: dataTableData,
+    data: tableData,
     columns: timeTracksColumnsPersonal,
     state: {
       columnFilters,
       sorting,
+      pagination,
     },
     initialState: {
       columnVisibility: {
@@ -117,6 +91,7 @@ export default function Page() {
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -126,70 +101,92 @@ export default function Page() {
   useEffect(() => {
     const newFilters: ColumnFiltersState = [];
 
-    if (sourceSystem) {
+    if (sourceSystem && sourceSystem !== "All") {
       newFilters.push({
         id: "sourceSystem",
         value: sourceSystem,
       });
     }
 
-    if (dateRange?.from || dateRange?.to) {
+    if (dateRange?.from && dateRange?.to) {
       newFilters.push({
         id: "startTime",
-        value: dateRange,
+        value: {
+          from: dateRange.from,
+          to: dateRange.to,
+        },
       });
     }
 
-    table.setSorting([{ id: "startTime", desc: true }]);
-
+    table.setPageIndex(0);
+    table.resetColumnFilters();
     table.setColumnFilters(newFilters);
-  }, [sourceSystem, dateRange, table]);
+  }, [sourceSystem, dateRange]);
 
-  const sourceSystemOptions: SourceSystem[] = useMemo(() => {
-    return Array.from(
-      new Set(dataTableData.map((item) => item.sourceSystem)),
-    ).sort();
-  }, []);
+  if (isLoading || isLoadingFilterOptions) {
+    return (
+      <AuthGuard>
+        <SidebarProvider>
+          <AppSidebar variant="inset" />
+          <SidebarInset>
+            <HeaderSkeleton />
+            <DashboardSkeleton />
+          </SidebarInset>
+        </SidebarProvider>
+      </AuthGuard>
+    );
+  }
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 64)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <Header title="Dashboard Individual - Produtividade" />
-        <div className="flex flex-1 flex-col pb-5">
-          <div className="@container/main flex flex-1 flex-col gap-4">
-            <div className="border-b bg-background">
-              <div className="px-4 py-3 lg:px-6">
-                <DashboardFilters
-                  sourceSystems={sourceSystemOptions}
-                  showSourceSystem
-                  showDateRange
+    <AuthGuard>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 64)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar variant="inset" />
+        <SidebarInset>
+          <Header
+            title="Dashboard Individual - Produtividade"
+            isLoading={isLoading}
+          />
+          <div className="flex flex-1 flex-col pb-5">
+            <div className="@container/main flex flex-1 flex-col gap-4">
+              <div className="border-b bg-background">
+                <div className="px-4 py-3 lg:px-6">
+                  <DashboardFilters
+                    sourceSystems={sourceSystemOptions}
+                    showSourceSystem
+                    showDateRange
+                  />
+                </div>
+              </div>
+              <div className="mt-2 md:mt-4 px-4 lg:px-6">
+                <DashboardPersonalCards
+                  productivity={productivityData?.productivity || 0}
+                  availableHours={productivityData?.availableHours || 0}
+                  workedHours={productivityData?.workedHours || 0}
+                  score={userScore?.score || 0}
+                  label={userScore?.label || ""}
+                />
+              </div>
+              <div className="grid *:container/main grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2">
+                <UserDailyHoursBarChart data={dailyProductivity || []} />
+                <ProductivityPerDayLineChart data={dailyProductivity || []} />
+              </div>
+              <div className="px-4 lg:px-6">
+                <DataTable
+                  table={table}
+                  key={`table-${JSON.stringify(columnFilters)}=${JSON.stringify(pagination)}`}
                 />
               </div>
             </div>
-            <div className="mt-2 md:mt-4 px-4 lg:px-6">
-              <DashboardPersonalCards />
-            </div>
-            <div className="grid *:container/main grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2">
-              <UserDailyHoursBarChart data={data} />
-              <ProductivityPerDayLineChart data={productivityData} />
-            </div>
-            <div className="px-4 lg:px-6">
-              <DataTable
-                table={table}
-                key={`table-${JSON.stringify(columnFilters)}`}
-              />
-            </div>
           </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+        </SidebarInset>
+      </SidebarProvider>
+    </AuthGuard>
   );
 }

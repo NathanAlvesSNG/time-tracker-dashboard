@@ -1,13 +1,17 @@
 import { IconUsers } from "@tabler/icons-react";
 import DashboardCard from "../dashboard-card";
 
-export default function ActiveUsersCard() {
+type Props = {
+  usersQuantity: number;
+};
+
+export default function ActiveUsersCard({ usersQuantity }: Props) {
   return (
     <DashboardCard
       title="Usuários Ativos"
-      value="15"
+      value={usersQuantity}
       icon={IconUsers}
-      description="Você tem 15 usuários trabalhando atualmente"
+      description="Número de usuários atualmente ativos"
     />
   );
 }

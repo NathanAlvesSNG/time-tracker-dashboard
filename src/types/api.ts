@@ -1,4 +1,4 @@
-export type SourceSystem = "Azure DevOps" | "GLPI" | "All";
+export type SourceSystem = "Azure DevOps" | "IZIT" | "All";
 
 export type TaskStatus = "1" | "2" | "3";
 // 1: Em andamento
@@ -69,16 +69,6 @@ export interface Service {
   serviceId: string;
   serviceName: string;
   sourceSystem: SourceSystem;
-}
-
-export interface User {
-  id: number;
-  userName: string;
-  userEmail: string;
-  userIdADO: string;
-  role: UserRole;
-  cargaHoraria: number;
-  userIdGLPI: string;
 }
 
 export interface TimeTrackResponse {

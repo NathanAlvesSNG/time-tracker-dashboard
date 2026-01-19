@@ -3,6 +3,7 @@
 import { createContext, useContext, useState } from "react";
 import type { DateRangeFilter } from "@/components/filters/date-range-filter";
 import type { SourceSystem } from "@/types/api";
+import { startOfMonth, subMonths } from "date-fns";
 
 type FiltersContextType = {
   sourceSystem?: SourceSystem;
@@ -15,17 +16,20 @@ type FiltersContextType = {
   setDateRange: (value: DateRangeFilter) => void;
 };
 
+const defaultDateRange: DateRangeFilter = {
+  from: startOfMonth(subMonths(new Date(), 1)),
+  to: new Date(),
+};
+
 const FiltersContext = createContext<FiltersContextType | null>(null);
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const [sourceSystem, setSourceSystem] = useState<SourceSystem | undefined>(
-    undefined,
+    undefined
   );
   const [person, setPerson] = useState<string | undefined>(undefined);
   const [project, setProject] = useState<string | undefined>(undefined);
-  const [dateRange, setDateRange] = useState<DateRangeFilter | undefined>(
-    undefined,
-  );
+  const [dateRange, setDateRange] = useState<DateRangeFilter>(defaultDateRange);
 
   return (
     <FiltersContext.Provider

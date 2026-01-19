@@ -1,13 +1,17 @@
 import { IconHourglassHigh } from "@tabler/icons-react";
 import DashboardCard from "../dashboard-card";
 
-export default function TasksInProgressCard() {
+type Props = {
+  quantity: number;
+};
+
+export default function TasksInProgressCard({ quantity }: Props) {
   return (
     <DashboardCard
       title="Tarefas em Progresso"
-      value="12"
+      value={quantity}
       icon={IconHourglassHigh}
-      description="Seu time está trabalhando em 12 tarefas no momento"
+      description="Quantidade de tarefas em andamento"
     />
   );
 }

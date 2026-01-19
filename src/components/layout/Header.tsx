@@ -6,9 +6,10 @@ import { UserMenu } from "./user-menu";
 
 type HeaderProps = {
   title: string;
+  isLoading?: boolean;
 };
 
-export function Header({ title }: HeaderProps) {
+export function Header({ title, isLoading = false }: HeaderProps) {
   return (
     <header className="flex h-(--header-height) shrink-0 items-center border-b bg-background">
       <div className="flex w-full items-center gap-3 px-4 lg:px-6">
@@ -20,13 +21,21 @@ export function Header({ title }: HeaderProps) {
 
         <div className="hidden lg:flex flex-1 justify-center">
           <div className="flex h-9 items-center bg-background px-2">
-            <UserMenu />
+            {isLoading ? (
+              <span className="animate-pulse">Carregando produtividade...</span>
+            ) : (
+              <UserMenu />
+            )}
           </div>
         </div>
 
         <div className="ml-auto flex items-center gap-2">
           <div className="flex h-9 items-center bg-background px-2 lg:hidden">
-            <UserMenu />
+            {isLoading ? (
+              <span className="animate-pulse">Carregando produtividade...</span>
+            ) : (
+              <UserMenu />
+            )}
           </div>
 
           <ThemeSelector />

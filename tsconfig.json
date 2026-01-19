@@ -20,7 +20,11 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@/images/*": ["./public/assets/images/*"]
+      "@/images/*": ["./public/assets/images/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/utils/*": ["./src/utils/*"]
     }
   },
   "include": [

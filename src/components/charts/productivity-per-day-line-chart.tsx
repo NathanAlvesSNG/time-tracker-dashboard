@@ -38,6 +38,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function ProductivityPerDayLineChart({ data }: Props) {
+  const isEmpty = !data || data.length === 0;
+
   return (
     <Card>
       <CardHeader>
@@ -48,74 +50,70 @@ export default function ProductivityPerDayLineChart({ data }: Props) {
       </CardHeader>
 
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={data}
-            margin={{
-              top: 16,
-              right: 24,
-              left: 8,
-              bottom: 8,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) =>
-                new Date(value).toLocaleDateString("pt-BR", {
-                  day: "2-digit",
-                  month: "2-digit",
-                })
-              }
-            />
-
-            <YAxis
-              domain={[0, 100]}
-              tickLine={false}
-              axisLine={false}
-              tickFormatter={(v) => `${v}%`}
-            />
-
-            <ChartTooltip
-              cursor={false}
-              content={
-                <ChartTooltipContent
-                  indicator="line"
-                  labelFormatter={(value) =>
-                    new Date(value).toLocaleDateString("pt-BR", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                    })
-                  }
-                />
-              }
-            />
-
-            <Line
-              dataKey="productivity"
-              type="monotone"
-              stroke="var(--chart-1)"
-              strokeWidth={2}
-              dot={false}
-              activeDot={{ r: 4 }}
+        {isEmpty ? (
+          <div className="flex items-center justify-center text-sm text-muted-foreground">
+            Nenhum dado encontrado para os filtros selecionados
+          </div>
+        ) : (
+          <ChartContainer config={chartConfig}>
+            <LineChart
+              accessibilityLayer
+              data={data}
+              margin={{
+                top: 16,
+                right: 24,
+                left: 8,
+                bottom: 8,
+              }}
             >
-              <LabelList
-                position="top"
-                offset={8}
-                className="fill-foreground"
-                fontSize={11}
-                formatter={(value: number) => `${value}%`}
-                dataKey="productivity"
+              <CartesianGrid vertical={false} />
+
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickFormatter={(value) =>
+                  new Date(value).toLocaleDateString("pt-BR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                  })
+                }
               />
-            </Line>
-          </LineChart>
-        </ChartContainer>
+
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(v) => `${v}%`}
+              />
+
+              <ChartTooltip
+                cursor={false}
+                content={
+                  <ChartTooltipContent
+                    indicator="line"
+                    labelFormatter={(value) =>
+                      new Date(value).toLocaleDateString("pt-BR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })
+                    }
+                  />
+                }
+              />
+
+              <Line
+                dataKey="productivity"
+                type="monotone"
+                stroke="var(--chart-1)"
+                strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 4 }}
+              />
+            </LineChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );
