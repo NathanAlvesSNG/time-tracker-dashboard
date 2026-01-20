@@ -2,7 +2,6 @@ import type { TablerIcon } from "@tabler/icons-react";
 import React from "react";
 import { useFilters } from "@/contexts/filters-context";
 import { sourceSystemConfig } from "@/lib/source-system";
-import { SourceSystem } from "@/types/api";
 import { Badge } from "./ui/badge";
 import {
   Card,

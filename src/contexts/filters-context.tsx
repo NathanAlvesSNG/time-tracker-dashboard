@@ -25,7 +25,7 @@ const FiltersContext = createContext<FiltersContextType | null>(null);
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const [sourceSystem, setSourceSystem] = useState<SourceSystem | undefined>(
-    undefined
+    undefined,
   );
   const [person, setPerson] = useState<string | undefined>(undefined);
   const [project, setProject] = useState<string | undefined>(undefined);

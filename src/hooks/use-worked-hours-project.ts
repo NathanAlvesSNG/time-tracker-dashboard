@@ -15,7 +15,7 @@ type WorkedHoursByProjectResponse = {
 
 export function useWorkedHoursProject(
   { person, startTime, endTime, project }: Filters,
-  options?: { enabled?: boolean }
+  options?: { enabled?: boolean },
 ) {
   const query = useQuery<WorkedHoursByProjectResponse[]>({
     queryKey: ["worked-hours-project", person, startTime, endTime, project],

@@ -22,7 +22,7 @@ type Filters = {
 
 export function useCompletedTasks(
   { person, sourceSystem, startTime, endTime }: Filters,
-  options?: { enabled?: boolean }
+  options?: { enabled?: boolean },
 ) {
   const enabled = Boolean(startTime && endTime) && (options?.enabled ?? true);
 

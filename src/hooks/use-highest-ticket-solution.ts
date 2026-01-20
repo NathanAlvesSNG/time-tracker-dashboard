@@ -13,7 +13,7 @@ type HighestTicketSolution = {
 
 export function useHighestTicketSolution(
   filters: Filters,
-  options?: { enabled?: boolean }
+  options?: { enabled?: boolean },
 ) {
   const query = useQuery<HighestTicketSolution>({
     queryKey: [

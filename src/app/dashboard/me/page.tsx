@@ -6,7 +6,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  PaginationState,
+  type PaginationState,
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
@@ -48,7 +48,7 @@ export default function Page() {
     : startOfMonth(new Date()).toISOString();
 
   const {
-    personal: { userTasks: userTasks, score: userScore },
+    personal: { userTasks, score: userScore },
     productivity: { productivity: productivityData, daily: dailyProductivity },
     isLoading,
   } = useDashboard(

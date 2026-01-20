@@ -52,7 +52,7 @@ export function mapActiveTasks(rows: ActiveTaskDbRow[]): TimeTrackingRow[] {
 }
 
 export function mapCompletedTasks(
-  rows: AllTimetracksDbRow[]
+  rows: AllTimetracksDbRow[],
 ): TimeTrackingRow[] {
   return rows.map((row) => {
     return {
@@ -68,7 +68,7 @@ export function mapCompletedTasks(
 }
 
 export function mapAllUserTasks(
-  rows: UserTasksDbRow[]
+  rows: UserTasksDbRow[],
 ): TimeTrackingPersonalRow[] {
   return rows.map((row) => {
     return {

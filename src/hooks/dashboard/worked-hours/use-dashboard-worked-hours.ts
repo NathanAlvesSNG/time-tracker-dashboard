@@ -1,13 +1,13 @@
 import { useWorkedHoursPerPerson } from "@/hooks/use-worked-hours-person";
 import { useWorkedHoursProject } from "@/hooks/use-worked-hours-project";
 import { useWorkedHoursProjectPerson } from "@/hooks/use-worked-hours-project-person";
-import { DashboardFilters } from "../types";
+import type { DashboardFilters } from "../types";
 import { normalizeDashboardFilters } from "@/hooks/dashboard/filter";
 import { useWorkedHoursDay } from "@/hooks/use-worked-hours-day";
 
 export function useDashboardWorkedHours(
   filters: DashboardFilters,
-  enabled = true
+  enabled = true,
 ) {
   const normalizedFilters = normalizeDashboardFilters(filters);
 

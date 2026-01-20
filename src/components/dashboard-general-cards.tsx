@@ -1,10 +1,9 @@
-import { TimeTrackingRow } from "@/types/time-tracking";
+import type { TimeTrackingRow } from "@/types/time-tracking";
 import ActiveProjectsCard from "./cards/active-projects";
 import ActiveUsersCard from "./cards/active-users";
-import TasksCompletedCard from "./cards/tasks-completed";
 import TasksInProgressCard from "./cards/tasks-in-progress";
 import TotalRunningTimeCard from "./cards/total-running-time";
-import { Row } from "@tanstack/react-table";
+import type { Row } from "@tanstack/react-table";
 
 type Props = {
   data: Row<TimeTrackingRow>[];

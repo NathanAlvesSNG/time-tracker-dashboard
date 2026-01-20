@@ -40,7 +40,7 @@ export default function TotalHoursPerPersonPerProjectBarChart({ data }: Props) {
 
       acc[item.person][item.project] = item.workedHours;
       return acc;
-    }, {})
+    }, {}),
   );
 
   return (

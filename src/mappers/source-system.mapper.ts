@@ -1,5 +1,5 @@
 export function mapSourceSystemToApi(
-  sourceSystem?: string
+  sourceSystem?: string,
 ): string | undefined {
   if (!sourceSystem || sourceSystem === "All") return undefined;
 

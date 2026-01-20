@@ -1,15 +1,15 @@
 import { useActiveTasks } from "@/hooks/use-active-tasks";
 import { useCompletedTasks } from "@/hooks/use-completed-tasks";
-import { DashboardFilters } from "../types";
+import type { DashboardFilters } from "../types";
 
 export function useDashboardOverview(
   filters: DashboardFilters,
-  enabled = true
+  enabled = true,
 ) {
   const active = useActiveTasks(filters, { enabled });
   const completed = useCompletedTasks(
     { startTime: filters.startTime!, endTime: filters.endTime!, ...filters },
-    { enabled }
+    { enabled },
   );
 
   return {

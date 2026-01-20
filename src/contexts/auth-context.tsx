@@ -1,6 +1,6 @@
 "use client";
 
-import { LoginResponse, User } from "@/types/auth";
+import type { LoginResponse, User } from "@/types/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { login as loginService } from "@/services/users.service";
 

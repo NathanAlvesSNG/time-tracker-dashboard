@@ -21,7 +21,7 @@ type Filters = {
 
 export function useActiveTasks(
   { person, sourceSystem }: Filters,
-  options?: { enabled?: boolean }
+  options?: { enabled?: boolean },
 ) {
   const query = useQuery<ActiveTasksResponse[]>({
     queryKey: ["active-tasks", person, sourceSystem],
