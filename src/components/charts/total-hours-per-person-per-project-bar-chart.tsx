@@ -13,6 +13,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+  ChartTooltipContentWithFormattedHour,
 } from "@/components/ui/chart";
 
 import type { TotalHoursPerPersonPerProject } from "@/types/api";
@@ -81,7 +82,9 @@ export default function TotalHoursPerPersonPerProjectBarChart({ data }: Props) {
 
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent indicator="dashed" />}
+                content={
+                  <ChartTooltipContentWithFormattedHour indicator="dashed" />
+                }
               />
 
               {projects.map((project) => (

@@ -18,6 +18,17 @@ export const login = async (email: string, password: string) => {
   return response.data;
 };
 
+export async function getMe() {
+  const { data } = await api.get("/auth/me", {
+    withCredentials: true,
+  });
+  return data;
+}
+
+export async function logout() {
+  await api.post("/auth/logout", {}, { withCredentials: true });
+}
+
 export const createPassword = async (email: string, password: string) => {
   const response = await api.post("/auth/register", { email, password });
   return response.data;

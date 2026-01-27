@@ -14,7 +14,7 @@ import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
+  ChartTooltipContentWithFormattedHour,
 } from "@/components/ui/chart";
 import type { WorkedHoursPerProject } from "@/types/api";
 
@@ -74,7 +74,9 @@ export function WorkedHoursPerProjectBarChart({ data }: Props) {
 
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent indicator="dot" />}
+                content={
+                  <ChartTooltipContentWithFormattedHour indicator="dot" />
+                }
               />
 
               <Bar

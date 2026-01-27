@@ -6,6 +6,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  PaginationState,
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
@@ -19,7 +20,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useFilters } from "@/contexts/filters-context";
 import type { ProductivityRow } from "@/types/time-tracking";
 import { AuthGuard } from "@/components/auth/auth-guard";
-import { startOfMonth, subMonths } from "date-fns";
+import { startOfMonth, startOfDay } from "date-fns";
 import { useDashboard } from "@/hooks/dashboard/use-dashboard";
 import DashboardSkeleton from "@/components/dashboard-skeleton";
 import { HeaderSkeleton } from "@/components/skeleton-header";
@@ -28,15 +29,20 @@ export default function Page() {
   const { sourceSystem, dateRange } = useFilters();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "productivity", desc: true },
+  ]);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 15,
+  });
 
   const startTime = dateRange?.from
     ? dateRange.from.toISOString()
-    : startOfMonth(subMonths(new Date(), 1)).toISOString();
-
+    : startOfMonth(new Date()).toISOString();
   const endTime = dateRange?.to
     ? dateRange.to.toISOString()
-    : startOfMonth(new Date()).toISOString();
+    : startOfDay(new Date()).toISOString();
 
   const {
     productivity: { allUsersProductivity, isLoading },
@@ -62,7 +68,9 @@ export default function Page() {
     state: {
       columnFilters,
       sorting,
+      pagination,
     },
+    onPaginationChange: setPagination,
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),

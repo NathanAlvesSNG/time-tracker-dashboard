@@ -3,7 +3,7 @@
 import { createContext, useContext, useState } from "react";
 import type { DateRangeFilter } from "@/components/filters/date-range-filter";
 import type { SourceSystem } from "@/types/api";
-import { startOfMonth, subMonths } from "date-fns";
+import { startOfMonth, startOfDay } from "date-fns";
 
 type FiltersContextType = {
   sourceSystem?: SourceSystem;
@@ -17,8 +17,8 @@ type FiltersContextType = {
 };
 
 const defaultDateRange: DateRangeFilter = {
-  from: startOfMonth(subMonths(new Date(), 1)),
-  to: new Date(),
+  from: startOfMonth(new Date()),
+  to: startOfDay(new Date()),
 };
 
 const FiltersContext = createContext<FiltersContextType | null>(null);

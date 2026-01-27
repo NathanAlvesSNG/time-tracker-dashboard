@@ -14,10 +14,17 @@ export function AuthGuard({ children, adminOnly = false }: AuthGuardProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (isLoading) return;
+
+    if (!user) {
       router.replace("/login");
+      return;
     }
-  }, [isLoading, user, router]);
+
+    if (adminOnly && user.role !== "admin") {
+      router.replace("/dashboard");
+    }
+  }, [isLoading, user, adminOnly, router]);
 
   if (isLoading) {
     return (
@@ -32,11 +39,7 @@ export function AuthGuard({ children, adminOnly = false }: AuthGuardProps) {
   }
 
   if (adminOnly && user.role !== "admin") {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <span>Você não tem permissão para acessar essa página.</span>
-      </div>
-    );
+    return null;
   }
 
   return <>{children}</>;

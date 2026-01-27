@@ -22,7 +22,7 @@ import { useFilters } from "@/contexts/filters-context";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import DashboardSkeleton from "@/components/dashboard-skeleton";
 import { HeaderSkeleton } from "@/components/skeleton-header";
-import { startOfMonth, subMonths } from "date-fns";
+import { startOfMonth, startOfDay } from "date-fns";
 import { useDashboard } from "@/hooks/dashboard/use-dashboard";
 import { useFilterOptions } from "@/hooks/use-filter-options";
 
@@ -40,11 +40,10 @@ export default function Page() {
 
   const startTime = dateRange?.from
     ? dateRange.from.toISOString()
-    : startOfMonth(subMonths(new Date(), 1)).toISOString();
-
+    : startOfMonth(new Date()).toISOString();
   const endTime = dateRange?.to
     ? dateRange.to.toISOString()
-    : startOfMonth(new Date()).toISOString();
+    : startOfDay(new Date()).toISOString();
 
   const {
     overview: { active: data },
@@ -102,18 +101,16 @@ export default function Page() {
   });
 
   useEffect(() => {
-    if (!tableData.length) return;
-
     const newFilters: ColumnFiltersState = [];
 
-    if (sourceSystem) {
+    if (sourceSystem && sourceSystem !== "All") {
       newFilters.push({
         id: "sourceSystem",
         value: sourceSystem,
       });
     }
 
-    if (person) {
+    if (person && person !== "All") {
       newFilters.push({
         id: "person",
         value: person,
@@ -121,6 +118,7 @@ export default function Page() {
     }
 
     table.setPageIndex(0);
+    table.resetColumnFilters();
     table.setColumnFilters(newFilters);
   }, [sourceSystem, person]);
 
@@ -155,18 +153,16 @@ export default function Page() {
             isLoading={isLoading}
           />
           <div className="@container/main flex flex-1 flex-col">
-            {data?.length != 0 && (
-              <div className="border-b bg-background">
-                <div className="px-4 py-3 lg:px-6">
-                  <DashboardFilters
-                    sourceSystems={sourceSystemOptions}
-                    persons={personOptions}
-                    showSourceSystem
-                    showPerson
-                  />
-                </div>
+            <div className="border-b bg-background">
+              <div className="px-4 py-3 lg:px-6">
+                <DashboardFilters
+                  sourceSystems={sourceSystemOptions}
+                  persons={personOptions}
+                  showSourceSystem
+                  showPerson
+                />
               </div>
-            )}
+            </div>
             <div className="flex flex-1 flex-col gap-6 px-4 py-6 lg:px-6">
               {isLoading ? (
                 <div className="flex items-center justify-center py-10">

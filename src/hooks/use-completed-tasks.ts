@@ -1,6 +1,5 @@
 import { mapCompletedTasks } from "@/mappers/time-tracking.mapper";
 import { getCompletedTasks } from "@/services/dashboard.service";
-import { mapSourceSystemToApi } from "@/mappers/source-system.mapper";
 import { useQuery } from "@tanstack/react-query";
 
 type CompletedTasksResponse = {
@@ -26,19 +25,33 @@ export function useCompletedTasks(
 ) {
   const enabled = Boolean(startTime && endTime) && (options?.enabled ?? true);
 
+  const effectiveFilters = {
+    person: person ?? "All",
+    sourceSystem: sourceSystem ?? "All",
+  };
+
   const query = useQuery<CompletedTasksResponse[]>({
-    queryKey: ["completed-tasks", person, startTime, endTime, sourceSystem],
+    queryKey: ["completed-tasks", effectiveFilters, startTime, endTime],
+
     queryFn: async () => {
-      const data = await getCompletedTasks({
-        person,
+      const apiFilters = {
+        person:
+          effectiveFilters.person === "All"
+            ? undefined
+            : effectiveFilters.person,
+        sourceSystem:
+          effectiveFilters.sourceSystem === "All"
+            ? undefined
+            : effectiveFilters.sourceSystem,
         startTime,
         endTime,
-        sourceSystem,
-      });
+      };
 
+      const data = await getCompletedTasks(apiFilters);
       return data;
     },
-    enabled: enabled,
+
+    enabled,
     staleTime: 1000 * 60 * 5,
   });
 

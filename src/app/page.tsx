@@ -1,7 +1,15 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default async function HomePage() {
-  redirect("/dashboard");
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (token) {
+    redirect("/dashboard");
+  }
+
+  redirect("/login");
 }

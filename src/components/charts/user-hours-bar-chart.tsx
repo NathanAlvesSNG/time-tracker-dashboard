@@ -6,7 +6,7 @@ import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
+  ChartTooltipContentWithFormattedHour,
 } from "@/components/ui/chart";
 
 import type { DailyHours } from "@/types/api";
@@ -77,7 +77,7 @@ export function UserDailyHoursBarChart({ data }: Props) {
               <ChartTooltip
                 cursor={false}
                 content={
-                  <ChartTooltipContent
+                  <ChartTooltipContentWithFormattedHour
                     indicator="dashed"
                     labelFormatter={(value) =>
                       new Date(value).toLocaleDateString("pt-BR", {

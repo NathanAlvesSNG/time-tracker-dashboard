@@ -14,7 +14,7 @@ import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
+  ChartTooltipContentWithFormattedHour,
 } from "../ui/chart";
 
 type Props = {
@@ -75,7 +75,9 @@ export default function WorkedHoursPerPersonBarChart({ data }: Props) {
 
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent indicator="dot" />}
+                content={
+                  <ChartTooltipContentWithFormattedHour indicator="dot" />
+                }
               />
 
               <Bar

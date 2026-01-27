@@ -1,55 +1,52 @@
 "use client";
 
-import type { LoginResponse, User } from "@/types/auth";
+import type { User } from "@/types/auth";
 import { createContext, useContext, useEffect, useState } from "react";
-import { login as loginService } from "@/services/users.service";
+import {
+  getMe,
+  login as loginService,
+  logout as logoutService,
+} from "@/services/users.service";
 
 type AuthContextData = {
   user: User | null;
-  token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
 
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextData | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token");
-
-    if (storedUser && storedToken) {
-      setUser(JSON.parse(storedUser));
-      setToken(storedToken);
+    async function loadUser() {
+      try {
+        const user = await getMe();
+        setUser(user);
+      } catch {
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
     }
 
-    setIsLoading(false);
+    loadUser();
   }, []);
 
   const login = async (email: string, password: string) => {
-    const data: LoginResponse = await loginService(email, password);
-
-    setToken(data.token);
-    setUser(data.user);
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+    await loginService(email, password);
+    const user = await getMe();
+    setUser(user);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await logoutService();
     setUser(null);
-    setToken(null);
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
     window.location.href = "/login";
   };
 
@@ -57,8 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{
         user,
-        token,
-        isAuthenticated: !!user && !!token,
+        isAuthenticated: !!user,
         isLoading,
         login,
         logout,
@@ -71,10 +67,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuth must be used dentro do AuthProvider");
   }
-
   return context;
 }

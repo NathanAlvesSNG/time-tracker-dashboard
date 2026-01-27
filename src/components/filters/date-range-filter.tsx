@@ -1,6 +1,6 @@
 "use client";
 
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/popover";
 import { useFilters } from "@/contexts/filters-context";
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export type DateRangeFilter = {
   from: Date | undefined;
@@ -25,6 +25,11 @@ type DateRangeFilterProps = {
 
 export function DateRangeFilter({ defaultValue }: DateRangeFilterProps) {
   const { dateRange, setDateRange } = useFilters();
+  const [tempDateRange, setTempDateRange] = useState<DateRangeFilter>({
+    from: dateRange?.from,
+    to: dateRange?.to,
+  });
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (!defaultValue) return;
@@ -43,25 +48,25 @@ export function DateRangeFilter({ defaultValue }: DateRangeFilterProps) {
     <div className="flex flex-col gap-2">
       <span className="text-sm font-medium">Período</span>
 
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             className={cn(
               "w-[260px] justify-start text-left font-normal",
-              !selected && "text-muted-foreground",
+              !dateRange?.from && "text-muted-foreground",
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
 
-            {selected?.from ? (
-              selected.to ? (
+            {dateRange?.from ? (
+              dateRange.to ? (
                 <>
-                  {format(selected.from, "dd/MM/yyyy", { locale: ptBR })} —{" "}
-                  {format(selected.to, "dd/MM/yyyy", { locale: ptBR })}
+                  {format(dateRange.from, "dd/MM/yyyy", { locale: ptBR })} —{" "}
+                  {format(dateRange.to, "dd/MM/yyyy", { locale: ptBR })}
                 </>
               ) : (
-                format(selected.from, "dd/MM/yyyy", { locale: ptBR })
+                format(dateRange.from, "dd/MM/yyyy", { locale: ptBR })
               )
             ) : (
               <span>Selecione um período</span>
@@ -69,14 +74,14 @@ export function DateRangeFilter({ defaultValue }: DateRangeFilterProps) {
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="w-auto p-3" align="start">
           <Calendar
             mode="range"
             numberOfMonths={2}
-            defaultMonth={selected?.from}
-            selected={selected}
+            defaultMonth={tempDateRange?.from}
+            selected={tempDateRange}
             onSelect={(range) => {
-              setDateRange({
+              setTempDateRange({
                 from: range?.from,
                 to: range?.to,
               });
@@ -84,6 +89,39 @@ export function DateRangeFilter({ defaultValue }: DateRangeFilterProps) {
             locale={ptBR}
             className="rounded-lg border"
           />
+          <p className="mt-2 text-xs text-muted-foreground">
+            💡 Clique duas vezes em uma data para alterar o início do período
+          </p>
+
+          <div className="mt-3 flex justify-end gap-2 border-t pt-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setTempDateRange({
+                  from: dateRange?.from,
+                  to: dateRange?.to,
+                });
+                setOpen(false);
+              }}
+            >
+              Cancelar
+            </Button>
+
+            <Button
+              size="sm"
+              onClick={() => {
+                setDateRange({
+                  from: tempDateRange?.from,
+                  to: tempDateRange?.to,
+                });
+                setOpen(false);
+              }}
+              disabled={!tempDateRange?.from}
+            >
+              Confirmar
+            </Button>
+          </div>
         </PopoverContent>
       </Popover>
     </div>

@@ -14,7 +14,7 @@ import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
+  ChartTooltipContentWithFormattedHour,
 } from "@/components/ui/chart";
 import type { WorkedHoursPerDay } from "@/types/api";
 
@@ -75,8 +75,7 @@ export default function WorkedHoursPerDayLineChart({ data }: Props) {
               <ChartTooltip
                 cursor={false}
                 content={
-                  <ChartTooltipContent
-                    indicator="line"
+                  <ChartTooltipContentWithFormattedHour
                     labelFormatter={(value) =>
                       new Date(value).toLocaleDateString("pt-BR", {
                         day: "2-digit",
@@ -84,6 +83,7 @@ export default function WorkedHoursPerDayLineChart({ data }: Props) {
                         year: "numeric",
                       })
                     }
+                    indicator="line"
                   />
                 }
               />

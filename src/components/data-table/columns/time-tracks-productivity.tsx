@@ -21,18 +21,21 @@ export const timeTracksColumnsProductivity: ColumnDef<ProductivityRow>[] = [
   },
   {
     accessorKey: "productivity",
-    header: "Produtividade",
+    id: "productivity",
+    header: () => <div className="text-left">Produtividade</div>,
     cell: ({ getValue }) => {
       const value = Number(getValue());
       const { emoji, text, border } = getProductivityUI(value);
 
       return (
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium tabular-nums">{value}%</span>
+        <div className="grid grid-cols-[1fr_auto] items-center gap-2 justify-end">
+          <span className="w-12 text-right text-sm font-medium tabular-nums">
+            {value}%
+          </span>
 
           <span
             className={cn(
-              "flex h-7 w-7 items-center justify-center rounded-md border text-base",
+              "flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-base",
               border,
             )}
             title={text}

@@ -22,7 +22,7 @@ import { AppSidebar } from "@/components/layout/sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useFilters } from "@/contexts/filters-context";
 import { AuthGuard } from "@/components/auth/auth-guard";
-import { startOfMonth, subMonths } from "date-fns";
+import { startOfMonth, startOfDay } from "date-fns";
 import { HeaderSkeleton } from "@/components/skeleton-header";
 import DashboardSkeleton from "@/components/dashboard-skeleton";
 import { useDashboard } from "@/hooks/dashboard/use-dashboard";
@@ -41,11 +41,10 @@ export default function Page() {
 
   const startTime = dateRange?.from
     ? dateRange.from.toISOString()
-    : startOfMonth(subMonths(new Date(), 1)).toISOString();
-
+    : startOfMonth(new Date()).toISOString();
   const endTime = dateRange?.to
     ? dateRange.to.toISOString()
-    : startOfMonth(new Date()).toISOString();
+    : startOfDay(new Date()).toISOString();
 
   const {
     personal: { userTasks, score: userScore },

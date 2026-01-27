@@ -15,8 +15,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { login } from "@/services/users.service";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -24,27 +24,21 @@ export function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const { login } = useAuth();
+
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (isLoading) return;
+
     setError("");
     setIsLoading(true);
 
     try {
-      const data = await login(email, password);
-
-      if (!data?.token || !data?.user) {
-        setError(
-          "Erro ao fazer login. Verifique sua conexão e tente novamente.",
-        );
-        return;
-      }
-
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      router.push("/dashboard");
+      await login(email, password);
+      router.replace("/dashboard");
     } catch (err: any) {
       if (err?.response) {
         const status = err.response.status;

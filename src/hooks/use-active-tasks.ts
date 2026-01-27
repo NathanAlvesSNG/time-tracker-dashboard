@@ -1,6 +1,5 @@
 import { getActiveTasks } from "@/services/dashboard.service";
 import { mapActiveTasks } from "@/mappers/time-tracking.mapper";
-import { mapSourceSystemToApi } from "@/mappers/source-system.mapper";
 import { useQuery } from "@tanstack/react-query";
 
 type ActiveTasksResponse = {
@@ -23,10 +22,25 @@ export function useActiveTasks(
   { person, sourceSystem }: Filters,
   options?: { enabled?: boolean },
 ) {
+  const effectiveFilters = {
+    person: person ?? "All",
+    sourceSystem: sourceSystem ?? "All",
+  };
+
   const query = useQuery<ActiveTasksResponse[]>({
-    queryKey: ["active-tasks", person, sourceSystem],
+    queryKey: ["active-tasks", effectiveFilters],
     queryFn: async () => {
-      const data = await getActiveTasks({ person, sourceSystem });
+      const apiFilters = {
+        person:
+          effectiveFilters.person === "All"
+            ? undefined
+            : effectiveFilters.person,
+        sourceSystem:
+          effectiveFilters.sourceSystem === "All"
+            ? undefined
+            : effectiveFilters.sourceSystem,
+      };
+      const data = await getActiveTasks(apiFilters);
 
       return data;
     },
