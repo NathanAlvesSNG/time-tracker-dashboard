@@ -10,22 +10,22 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import { startOfDay, startOfMonth } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
+import { AuthGuard } from "@/components/auth/auth-guard";
 import ProductivityPerDayLineChart from "@/components/charts/productivity-per-day-line-chart";
 import { UserDailyHoursBarChart } from "@/components/charts/user-hours-bar-chart";
 import DashboardPersonalCards from "@/components/dashboard-personal-cards";
+import DashboardSkeleton from "@/components/dashboard-skeleton";
 import { timeTracksColumnsPersonal } from "@/components/data-table/columns/time-tracks-personal";
 import { DataTable } from "@/components/data-table/data-table";
 import { DashboardFilters } from "@/components/layout/dashboard-filters";
 import { Header } from "@/components/layout/header";
 import { AppSidebar } from "@/components/layout/sidebar";
+import { HeaderSkeleton } from "@/components/skeleton-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useFilters } from "@/contexts/filters-context";
-import { AuthGuard } from "@/components/auth/auth-guard";
-import { startOfMonth, startOfDay } from "date-fns";
 import { useDashboard } from "@/hooks/dashboard/use-dashboard";
-import DashboardSkeleton from "@/components/dashboard-skeleton";
-import { HeaderSkeleton } from "@/components/skeleton-header";
 import { useFilterOptions } from "@/hooks/use-filter-options";
 
 export default function Page() {

@@ -1,8 +1,8 @@
 "use server";
 
-import { Login } from "@/components/login";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { Login } from "@/components/login";
 
 export default async function LoginPage() {
   const cookieStore = await cookies();

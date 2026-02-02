@@ -1,6 +1,6 @@
-import { getActiveTasks } from "@/services/dashboard.service";
-import { mapActiveTasks } from "@/mappers/time-tracking.mapper";
 import { useQuery } from "@tanstack/react-query";
+import { mapActiveTasks } from "@/mappers/time-tracking.mapper";
+import { getActiveTasks } from "@/services/dashboard.service";
 
 type ActiveTasksResponse = {
   person: string;

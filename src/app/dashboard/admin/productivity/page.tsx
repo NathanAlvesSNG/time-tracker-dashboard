@@ -6,24 +6,24 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  PaginationState,
+  type PaginationState,
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import { startOfDay, startOfMonth } from "date-fns";
 import { useMemo, useState } from "react";
+import { AuthGuard } from "@/components/auth/auth-guard";
+import DashboardSkeleton from "@/components/dashboard-skeleton";
 import { timeTracksColumnsProductivity } from "@/components/data-table/columns/time-tracks-productivity";
 import { DataTable } from "@/components/data-table/data-table";
 import { DashboardFilters } from "@/components/layout/dashboard-filters";
 import { Header } from "@/components/layout/header";
 import { AppSidebar } from "@/components/layout/sidebar";
+import { HeaderSkeleton } from "@/components/skeleton-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useFilters } from "@/contexts/filters-context";
-import type { ProductivityRow } from "@/types/time-tracking";
-import { AuthGuard } from "@/components/auth/auth-guard";
-import { startOfMonth, startOfDay } from "date-fns";
 import { useDashboard } from "@/hooks/dashboard/use-dashboard";
-import DashboardSkeleton from "@/components/dashboard-skeleton";
-import { HeaderSkeleton } from "@/components/skeleton-header";
+import type { ProductivityRow } from "@/types/time-tracking";
 
 export default function Page() {
   const { sourceSystem, dateRange } = useFilters();

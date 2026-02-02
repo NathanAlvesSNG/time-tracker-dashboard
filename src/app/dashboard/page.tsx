@@ -10,19 +10,20 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import { startOfDay, startOfMonth } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
+import { AuthGuard } from "@/components/auth/auth-guard";
 import { DashboardGeneralCards } from "@/components/dashboard-general-cards";
+import DashboardSkeleton from "@/components/dashboard-skeleton";
 import { timeTracksColumns } from "@/components/data-table/columns/time-tracks.columns";
 import { DataTable } from "@/components/data-table/data-table";
+import { FeatureTimeTable } from "@/components/feature-time-table";
 import { DashboardFilters } from "@/components/layout/dashboard-filters";
 import { Header } from "@/components/layout/header";
 import { AppSidebar } from "@/components/layout/sidebar";
+import { HeaderSkeleton } from "@/components/skeleton-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useFilters } from "@/contexts/filters-context";
-import { AuthGuard } from "@/components/auth/auth-guard";
-import DashboardSkeleton from "@/components/dashboard-skeleton";
-import { HeaderSkeleton } from "@/components/skeleton-header";
-import { startOfMonth, startOfDay } from "date-fns";
 import { useDashboard } from "@/hooks/dashboard/use-dashboard";
 import { useFilterOptions } from "@/hooks/use-filter-options";
 
@@ -46,7 +47,7 @@ export default function Page() {
     : startOfDay(new Date()).toISOString();
 
   const {
-    overview: { active: data },
+    overview: { active: data, phasesInfo },
     isLoading,
   } = useDashboard(
     {
@@ -160,6 +161,7 @@ export default function Page() {
                   persons={personOptions}
                   showSourceSystem
                   showPerson
+                  showDateRange
                 />
               </div>
             </div>
@@ -178,6 +180,10 @@ export default function Page() {
                     key={`table-${JSON.stringify(
                       columnFilters,
                     )} - ${JSON.stringify(pagination)}`}
+                  />
+                  <FeatureTimeTable
+                    data={phasesInfo ?? []}
+                    isLoading={isLoading}
                   />
                 </>
               )}

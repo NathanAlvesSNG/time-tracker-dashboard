@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { getWorkedHoursDay } from "@/services/dashboard.service";
 import type { WorkedHoursPerDay } from "@/types/api";
-import { useQuery } from "@tanstack/react-query";
 
 type Filters = {
   person?: string;

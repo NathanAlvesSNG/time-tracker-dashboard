@@ -1,7 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/auth-context";
 import { mapSourceSystemToApi } from "@/mappers/source-system.mapper";
 import { getUserDailyProductivity } from "@/services/dashboard.service";
-import { useQuery } from "@tanstack/react-query";
 import { useUserInfo } from "./use-user-info";
 
 type Filters = {

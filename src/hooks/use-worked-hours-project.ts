@@ -1,5 +1,5 @@
-import { getWorkedHoursByProject } from "@/services/dashboard.service";
 import { useQuery } from "@tanstack/react-query";
+import { getWorkedHoursByProject } from "@/services/dashboard.service";
 
 type Filters = {
   person?: string;

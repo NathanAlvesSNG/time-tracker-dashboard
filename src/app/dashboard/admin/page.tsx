@@ -1,22 +1,22 @@
 "use client";
 
+import { startOfDay, startOfMonth } from "date-fns";
+import { useMemo } from "react";
+import { AuthGuard } from "@/components/auth/auth-guard";
 import TotalHoursPerPersonPerProjectBarChart from "@/components/charts/total-hours-per-person-per-project-bar-chart";
 import WorkedHoursPerDayLineChart from "@/components/charts/worked-hours-per-day-line-chart";
 import WorkedHoursPerPersonBarChart from "@/components/charts/worked-hours-per-person";
 import { WorkedHoursPerProjectBarChart } from "@/components/charts/worked-hours-per-project-bar-chart";
 import DashboardGlpiCards from "@/components/dashboard-glpi-cards";
+import DashboardSkeleton from "@/components/dashboard-skeleton";
 import { DashboardFilters } from "@/components/layout/dashboard-filters";
 import { Header } from "@/components/layout/header";
 import { AppSidebar } from "@/components/layout/sidebar";
+import { HeaderSkeleton } from "@/components/skeleton-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useFilters } from "@/contexts/filters-context";
-import { AuthGuard } from "@/components/auth/auth-guard";
-import { startOfMonth, startOfDay } from "date-fns";
-import DashboardSkeleton from "@/components/dashboard-skeleton";
-import { HeaderSkeleton } from "@/components/skeleton-header";
-import { useMemo } from "react";
-import { useFilterOptions } from "@/hooks/use-filter-options";
 import { useDashboard } from "@/hooks/dashboard/use-dashboard";
+import { useFilterOptions } from "@/hooks/use-filter-options";
 
 export default function Page() {
   const { sourceSystem, dateRange, person, project } = useFilters();

@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { mapCompletedTasks } from "@/mappers/time-tracking.mapper";
 import { getCompletedTasks } from "@/services/dashboard.service";
-import { useQuery } from "@tanstack/react-query";
 
 type CompletedTasksResponse = {
   person: string;
@@ -59,7 +59,7 @@ export function useCompletedTasks(
 
   return {
     data: mappedData,
-    loading: query.isLoading,
+    isLoading: query.isLoading,
     refetch: query.refetch,
   };
 }

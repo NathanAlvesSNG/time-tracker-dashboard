@@ -19,8 +19,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Logo from "@/images/logo.svg";
 import { useAuth } from "@/contexts/auth-context";
+import Logo from "@/images/logo.svg";
 
 const data = {
   navMain: [

@@ -12,7 +12,6 @@ import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
   ChartTooltipContentWithFormattedHour,
 } from "@/components/ui/chart";
 

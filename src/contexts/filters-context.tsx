@@ -1,9 +1,9 @@
 "use client";
 
+import { startOfDay, startOfMonth } from "date-fns";
 import { createContext, useContext, useState } from "react";
 import type { DateRangeFilter } from "@/components/filters/date-range-filter";
 import type { SourceSystem } from "@/types/api";
-import { startOfMonth, startOfDay } from "date-fns";
 
 type FiltersContextType = {
   sourceSystem?: SourceSystem;

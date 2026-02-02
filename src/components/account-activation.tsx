@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircle2, Lock, Mail, XCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -14,9 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 import { createPassword, getUserByEmail } from "@/services/users.service";
-import { useRouter } from "next/navigation";
 
 type Step = "email" | "password" | "error";
 

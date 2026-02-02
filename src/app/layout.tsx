@@ -3,12 +3,11 @@ import { cookies } from "next/headers";
 import "./globals.css";
 
 import { ActiveThemeProvider } from "@/components/active-theme";
-
+import { QueryProvider } from "@/components/providers/query-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { AuthProvider } from "@/contexts/auth-context";
 import { FiltersProvider } from "@/contexts/filters-context";
 import { cn } from "@/lib/utils";
-import { AuthProvider } from "@/contexts/auth-context";
-import { QueryProvider } from "@/components/providers/query-provider";
 
 export const metadata: Metadata = {
   title: "Dashboard - Time Tracker",

@@ -1,16 +1,16 @@
 "use client";
 
 import { LogOut } from "lucide-react";
-import { useAuth } from "@/contexts/auth-context";
-import { useFilters } from "@/contexts/filters-context";
-import { useProductivity } from "@/hooks/use-productivity";
-import { cn, getProductivityUI } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/contexts/auth-context";
+import { useFilters } from "@/contexts/filters-context";
+import { useProductivity } from "@/hooks/use-productivity";
+import { cn, getProductivityUI } from "@/lib/utils";
 
 export function UserMenu() {
   const { user, isLoading, logout } = useAuth();

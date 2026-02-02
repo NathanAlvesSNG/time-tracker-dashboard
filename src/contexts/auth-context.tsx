@@ -1,12 +1,12 @@
 "use client";
 
-import type { User } from "@/types/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import {
   getMe,
   login as loginService,
   logout as logoutService,
 } from "@/services/users.service";
+import type { User } from "@/types/auth";
 
 type AuthContextData = {
   user: User | null;

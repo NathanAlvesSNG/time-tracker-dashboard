@@ -1,6 +1,6 @@
 import { useUserScore } from "@/hooks/use-user-score";
-import type { DashboardFilters } from "../types";
 import { useUserTasks } from "@/hooks/use-user-tasks";
+import type { DashboardFilters } from "../types";
 
 export function useDashboardPersonal(
   filters: DashboardFilters,

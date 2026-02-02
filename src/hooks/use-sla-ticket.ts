@@ -1,5 +1,5 @@
-import { getSlaTicket } from "@/services/dashboard.service";
 import { useQuery } from "@tanstack/react-query";
+import { getSlaTicket } from "@/services/dashboard.service";
 
 type Filters = {
   startTime?: string;

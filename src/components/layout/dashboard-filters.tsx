@@ -1,13 +1,12 @@
 "use client";
 
+import { useFilters } from "@/contexts/filters-context";
 import type { SourceSystem } from "@/types/api";
 import { DateRangeFilter } from "../filters/date-range-filter";
 import { PersonFilter } from "../filters/person-filter";
 import { ProjectFilter } from "../filters/project-filter";
 import { SourceSystemFilter } from "../filters/source-system-filter";
 import { Separator } from "../ui/separator";
-
-import { useFilters } from "@/contexts/filters-context";
 
 type DashboardFiltersProps = {
   sourceSystems?: SourceSystem[];

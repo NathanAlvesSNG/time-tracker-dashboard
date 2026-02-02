@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/auth-context";
 import { getUserScore } from "@/services/dashboard.service";
-import { useQuery } from "@tanstack/react-query";
 import { useUserInfo } from "./use-user-info";
 
 type ScoreResponse = {

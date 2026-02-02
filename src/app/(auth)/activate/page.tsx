@@ -1,8 +1,8 @@
 "use server";
 
-import { AccountActivation } from "@/components/account-activation";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { AccountActivation } from "@/components/account-activation";
 
 export default async function ActivatePage() {
   const cookieStore = await cookies();

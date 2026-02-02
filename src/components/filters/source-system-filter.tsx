@@ -1,14 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -17,10 +12,14 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-
-import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useFilters } from "@/contexts/filters-context";
-import { SourceSystem } from "@/types/api";
+import { cn } from "@/lib/utils";
+import type { SourceSystem } from "@/types/api";
 
 type Props = {
   options: string[];

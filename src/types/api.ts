@@ -45,6 +45,14 @@ export type TicketsDurationPerDay = {
   duration: number;
 };
 
+export type Phase =
+  | "Pré-projeto"
+  | "Frontend"
+  | "Backend"
+  | "Testes e Qualidade"
+  | "Ajustes"
+  | "Implantação";
+
 export interface Task {
   id: number;
   taskId: string;

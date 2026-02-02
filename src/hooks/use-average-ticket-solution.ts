@@ -1,5 +1,5 @@
-import { getAverageTicketSolution } from "@/services/dashboard.service";
 import { useQuery } from "@tanstack/react-query";
+import { getAverageTicketSolution } from "@/services/dashboard.service";
 
 type Filters = {
   startTime?: string;

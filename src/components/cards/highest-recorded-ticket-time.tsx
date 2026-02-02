@@ -1,6 +1,6 @@
 import { IconAlertTriangle } from "@tabler/icons-react";
-import DashboardCard from "../dashboard-card";
 import { formatSecondsToHMS } from "@/lib/utils";
+import DashboardCard from "../dashboard-card";
 
 type Props = { highestTicketTime: number };
 

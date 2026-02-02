@@ -1,7 +1,8 @@
 "use client";
 
+import { format, parseISO } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-
 import {
   Card,
   CardContent,
@@ -9,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import {
   type ChartConfig,
   ChartContainer,
@@ -17,9 +17,6 @@ import {
   ChartTooltipContentWithFormattedHour,
 } from "@/components/ui/chart";
 import type { WorkedHoursPerDay } from "@/types/api";
-
-import { format, parseISO } from "date-fns";
-import { ptBR } from "date-fns/locale";
 
 type Props = {
   data: WorkedHoursPerDay[];

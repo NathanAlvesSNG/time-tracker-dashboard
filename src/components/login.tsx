@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Lock, Mail, XCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -14,8 +15,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 
 export function Login() {

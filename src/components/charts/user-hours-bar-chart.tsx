@@ -1,14 +1,14 @@
 "use client";
 
+import { format, parseISO } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
-
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContentWithFormattedHour,
 } from "@/components/ui/chart";
-
 import type { DailyHours } from "@/types/api";
 import {
   Card,
@@ -17,9 +17,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-
-import { format, parseISO } from "date-fns";
-import { ptBR } from "date-fns/locale";
 
 type Props = {
   data: DailyHours[];

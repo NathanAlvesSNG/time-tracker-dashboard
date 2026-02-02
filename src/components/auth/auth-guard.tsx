@@ -1,7 +1,7 @@
 "use client";
 
-import { type ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { type ReactNode, useEffect } from "react";
 import { useAuth } from "@/contexts/auth-context";
 
 type AuthGuardProps = {

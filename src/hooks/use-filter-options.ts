@@ -1,5 +1,5 @@
-import { getFilterOptions } from "@/services/dashboard.service";
 import { useQuery } from "@tanstack/react-query";
+import { getFilterOptions } from "@/services/dashboard.service";
 
 type FilterOptionsResponse = {
   users: string[];

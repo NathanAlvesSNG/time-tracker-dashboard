@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,8 +17,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
 import { useFilters } from "@/contexts/filters-context";
+import { cn } from "@/lib/utils";
 
 type Props = {
   options: string[];

@@ -1,5 +1,5 @@
-import { getUserByName } from "@/services/dashboard.service";
 import { useQuery } from "@tanstack/react-query";
+import { getUserByName } from "@/services/dashboard.service";
 
 type Filters = {
   userName: string;

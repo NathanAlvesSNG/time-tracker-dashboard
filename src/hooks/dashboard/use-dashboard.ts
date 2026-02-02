@@ -1,9 +1,9 @@
-import type { DashboardFilters, DashboardDataOptions } from "./types";
-import { useDashboardProductivity } from "./productivity/use-dashboard-productivity";
-import { useDashboardWorkedHours } from "./worked-hours/use-dashboard-worked-hours";
 import { useDashboardOverview } from "./overview/useDashboardOverview";
-import { useDashboardTicket } from "./tickets/use-dashboard-ticket";
 import { useDashboardPersonal } from "./personal/use-dashboard-personal";
+import { useDashboardProductivity } from "./productivity/use-dashboard-productivity";
+import { useDashboardTicket } from "./tickets/use-dashboard-ticket";
+import type { DashboardDataOptions, DashboardFilters } from "./types";
+import { useDashboardWorkedHours } from "./worked-hours/use-dashboard-worked-hours";
 
 export function useDashboard(
   filters: DashboardFilters,

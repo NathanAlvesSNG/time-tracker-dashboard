@@ -1,8 +1,9 @@
 "use client";
 
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -12,7 +13,6 @@ import {
 } from "@/components/ui/popover";
 import { useFilters } from "@/contexts/filters-context";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
 
 export type DateRangeFilter = {
   from: Date | undefined;

@@ -1,6 +1,6 @@
 import { IconClock } from "@tabler/icons-react";
-import DashboardCard from "../dashboard-card";
 import { formatHoursToHMS } from "@/lib/utils";
+import DashboardCard from "../dashboard-card";
 
 type Props = {
   availableHours: number;
