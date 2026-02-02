@@ -23,7 +23,7 @@ export default function DashboardPersonalCards({
       <AvailableHoursCard availableHours={availableHours} />
       <HoursWorkedCard workedHours={workedHours} />
       <ProductivityCard productivity={productivity} />
-      <ProductivityTeamCard score={score} label={label} />
+      <ProductivityTeamCard label={label} />
     </div>
   );
 }
