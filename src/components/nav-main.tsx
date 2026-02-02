@@ -27,7 +27,10 @@ export function NavMain({
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton tooltip={item.title}>
                 {item.icon && <item.icon />}
-                <Link href={item.url}>
+                <Link
+                  href={item.url}
+                  target={item.title === "Apontamentos" ? "_blank" : "_self"}
+                >
                   <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>

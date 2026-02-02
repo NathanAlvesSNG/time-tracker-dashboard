@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  IconClock,
   IconDashboard,
   IconLayoutDashboard,
   IconListDetails,
@@ -33,6 +34,11 @@ const data = {
       title: "Individual",
       url: "/dashboard/me",
       icon: IconUser,
+    },
+    {
+      title: "Apontamentos",
+      url: "https://sngtimetrackersite.sng.com.br/index.html",
+      icon: IconClock,
     },
   ],
 
