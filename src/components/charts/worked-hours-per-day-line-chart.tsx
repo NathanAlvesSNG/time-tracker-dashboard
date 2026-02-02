@@ -18,6 +18,9 @@ import {
 } from "@/components/ui/chart";
 import type { WorkedHoursPerDay } from "@/types/api";
 
+import { format, parseISO } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
 type Props = {
   data: WorkedHoursPerDay[];
 };
@@ -57,12 +60,10 @@ export default function WorkedHoursPerDayLineChart({ data }: Props) {
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                tickFormatter={(value) =>
-                  new Date(value).toLocaleDateString("pt-BR", {
-                    day: "2-digit",
-                    month: "2-digit",
-                  })
-                }
+                tickFormatter={(value) => {
+                  const date = parseISO(value);
+                  return format(date, "dd/MM", { locale: ptBR });
+                }}
               />
 
               <YAxis
@@ -76,13 +77,10 @@ export default function WorkedHoursPerDayLineChart({ data }: Props) {
                 cursor={false}
                 content={
                   <ChartTooltipContentWithFormattedHour
-                    labelFormatter={(value) =>
-                      new Date(value).toLocaleDateString("pt-BR", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                      })
-                    }
+                    labelFormatter={(value: string) => {
+                      const date = parseISO(value);
+                      return format(date, "dd/MM/yyyy", { locale: ptBR });
+                    }}
                     indicator="line"
                   />
                 }

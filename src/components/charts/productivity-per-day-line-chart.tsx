@@ -19,6 +19,9 @@ import {
 
 import type { ProductivityPerDay } from "@/types/api";
 
+import { format, parseISO } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
 type Props = {
   data: ProductivityPerDay[];
 };
@@ -66,12 +69,10 @@ export default function ProductivityPerDayLineChart({ data }: Props) {
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                tickFormatter={(value) =>
-                  new Date(value).toLocaleDateString("pt-BR", {
-                    day: "2-digit",
-                    month: "2-digit",
-                  })
-                }
+                tickFormatter={(value: string) => {
+                  const date = parseISO(value);
+                  return format(date, "dd/MM", { locale: ptBR });
+                }}
               />
 
               <YAxis
@@ -85,13 +86,10 @@ export default function ProductivityPerDayLineChart({ data }: Props) {
                 content={
                   <ChartTooltipContent
                     indicator="line"
-                    labelFormatter={(value) =>
-                      new Date(value).toLocaleDateString("pt-BR", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                      })
-                    }
+                    labelFormatter={(value: string) => {
+                      const date = parseISO(value);
+                      return format(date, "dd/MM/yyyy", { locale: ptBR });
+                    }}
                   />
                 }
               />
