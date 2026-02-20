@@ -175,10 +175,7 @@ export async function getUsersProductivity(params?: {
   return data;
 }
 
-export async function getPhasesInfo(params?: {
-  startTime: string;
-  endTime: string;
-}) {
-  const { data } = await api.get("/dashboard/phases", { params });
+export async function getPhasesInfo() {
+  const { data } = await api.get("/dashboard/phases");
   return data;
 }

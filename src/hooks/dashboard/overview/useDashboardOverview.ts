@@ -12,10 +12,7 @@ export function useDashboardOverview(
     { startTime: filters.startTime!, endTime: filters.endTime!, ...filters },
     { enabled },
   );
-  const phasesInfo = usePhasesInfo(
-    { startTime: filters.startTime!, endTime: filters.endTime! },
-    { enabled },
-  );
+  const phasesInfo = usePhasesInfo({ enabled });
 
   return {
     active: active.data,

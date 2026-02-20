@@ -28,7 +28,6 @@ import {
   normalizePhaseName,
   PHASE_ORDER,
 } from "@/lib/utils";
-import { Phase } from "@/types/api";
 
 type Props = {
   data: { phase: string; hours: number; project?: string }[];
@@ -45,7 +44,6 @@ export function FeatureTimeTable({ data, isLoading }: Props) {
 
   const phaseSummary = useMemo(() => {
     const phaseMap = new Map<string, number>();
-
     const isAllSelected = selectedProjects.length === 0;
 
     data.forEach((item) => {
@@ -60,36 +58,48 @@ export function FeatureTimeTable({ data, isLoading }: Props) {
       0,
     );
 
-    let summary = Array.from(phaseMap.entries()).map(([phase, hours]) => ({
+    const withFloat = Array.from(phaseMap.entries()).map(([phase, hours]) => ({
       phase,
       hours,
-      percentage:
-        totalFiltered > 0 ? Math.round((hours / totalFiltered) * 100) : 0,
+      percentage: totalFiltered > 0 ? (hours / totalFiltered) * 100 : 0,
     }));
 
-    summary = summary.sort((a, b) => {
-      const normA = normalizePhaseName(a.phase)
-        .toLowerCase()
-        .replace(/\s+/g, "-");
-      const normB = normalizePhaseName(b.phase)
-        .toLowerCase()
-        .replace(/\s+/g, "-");
+    const floored = withFloat.map((item, i) => ({
+      ...item,
+      percentage: Math.floor(item.percentage),
+      remainder: item.percentage - Math.floor(item.percentage),
+      originalIndex: i,
+    }));
 
-      const normalizedOrder = PHASE_ORDER.map((p) =>
-        normalizePhaseName(p).toLowerCase().replace(/\s+/g, "-"),
-      );
+    const missing =
+      100 - floored.reduce((sum, item) => sum + item.percentage, 0);
 
-      const indexA = normalizedOrder.indexOf(normA);
-      const indexB = normalizedOrder.indexOf(normB);
+    floored
+      .slice()
+      .sort((a, b) => b.remainder - a.remainder)
+      .slice(0, missing)
+      .forEach((item) => {
+        floored[item.originalIndex].percentage += 1;
+      });
+
+    const summary = floored.map(
+      ({ remainder: _, originalIndex: __, ...item }) => item,
+    );
+
+    const normalizedOrder = PHASE_ORDER.map((p) => p.toLowerCase().trim());
+
+    return summary.sort((a, b) => {
+      const displayA = getDisplayPhaseName(a.phase).toLowerCase().trim();
+      const displayB = getDisplayPhaseName(b.phase).toLowerCase().trim();
+
+      const indexA = normalizedOrder.indexOf(displayA);
+      const indexB = normalizedOrder.indexOf(displayB);
 
       if (indexA === -1 && indexB === -1) return 0;
       if (indexA === -1) return 1;
       if (indexB === -1) return -1;
-
       return indexA - indexB;
     });
-
-    return summary;
   }, [data, selectedProjects]);
 
   const stackedSegments = phaseSummary.map((item) => ({

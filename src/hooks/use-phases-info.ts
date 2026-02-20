@@ -2,28 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import { normalizePhaseName } from "@/lib/utils";
 import { getPhasesInfo } from "@/services/dashboard.service";
 
-type Filters = {
-  startTime: string;
-  endTime: string;
-};
-
 export type PhaseInfo = {
   phase: string;
   hours: number;
   project?: string;
 };
 
-export function usePhasesInfo(
-  { startTime, endTime }: Filters,
-  options?: { enabled?: boolean },
-) {
-  const enabled = Boolean(startTime && endTime) && (options?.enabled ?? true);
+export function usePhasesInfo(options?: { enabled?: boolean }) {
+  const enabled = options?.enabled ?? true;
 
   return useQuery<PhaseInfo[]>({
-    queryKey: ["phases-info", startTime, endTime],
+    queryKey: ["phases-info"],
     enabled,
     queryFn: async () => {
-      const rawData = await getPhasesInfo({ startTime, endTime });
+      const rawData = await getPhasesInfo();
 
       return rawData.map((item: any) => ({
         phase: normalizePhaseName(item.phase),

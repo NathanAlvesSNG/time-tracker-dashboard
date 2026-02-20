@@ -10,7 +10,6 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { startOfDay, startOfMonth } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import { DashboardGeneralCards } from "@/components/dashboard-general-cards";
@@ -28,7 +27,7 @@ import { useDashboard } from "@/hooks/dashboard/use-dashboard";
 import { useFilterOptions } from "@/hooks/use-filter-options";
 
 export default function Page() {
-  const { sourceSystem, person, dateRange } = useFilters();
+  const { sourceSystem, person } = useFilters();
   const { data: filterOptions, isLoading: isLoadingFilterOptions } =
     useFilterOptions();
 
@@ -39,20 +38,11 @@ export default function Page() {
     pageSize: 10,
   });
 
-  const startTime = dateRange?.from
-    ? dateRange.from.toISOString()
-    : startOfMonth(new Date()).toISOString();
-  const endTime = dateRange?.to
-    ? dateRange.to.toISOString()
-    : startOfDay(new Date()).toISOString();
-
   const {
     overview: { active: data, phasesInfo },
     isLoading,
   } = useDashboard(
     {
-      startTime,
-      endTime,
       person,
       sourceSystem,
     },
@@ -161,7 +151,6 @@ export default function Page() {
                   persons={personOptions}
                   showSourceSystem
                   showPerson
-                  showDateRange
                 />
               </div>
             </div>
