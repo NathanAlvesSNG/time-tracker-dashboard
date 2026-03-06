@@ -15,7 +15,6 @@ export default function DashboardPersonalCards({
   productivity,
   availableHours,
   workedHours,
-  score,
   label,
 }: Props) {
   return (

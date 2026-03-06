@@ -10,7 +10,7 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { startOfDay, startOfMonth } from "date-fns";
+import { endOfDay, startOfWeek } from "date-fns";
 import { useMemo, useState } from "react";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import DashboardSkeleton from "@/components/dashboard-skeleton";
@@ -37,12 +37,19 @@ export default function Page() {
     pageSize: 15,
   });
 
+  const defaultFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
+  const defaultTo = new Date();
+
+  defaultFrom.setHours(12, 0, 0, 0);
+  defaultTo.setHours(12, 0, 0, 0);
+
   const startTime = dateRange?.from
     ? dateRange.from.toISOString()
-    : startOfMonth(new Date()).toISOString();
+    : defaultFrom.toISOString();
+
   const endTime = dateRange?.to
     ? dateRange.to.toISOString()
-    : startOfDay(new Date()).toISOString();
+    : defaultTo.toISOString();
 
   const {
     productivity: { allUsersProductivity, isLoading },
@@ -110,7 +117,10 @@ export default function Page() {
             <div className="@container/main flex flex-1 flex-col gap-4">
               <div className="border-b bg-background">
                 <div className="px-4 py-3 lg:px-6">
-                  <DashboardFilters showDateRange />
+                  <DashboardFilters
+                    showDateRange
+                    defaultValue={{ from: defaultFrom, to: defaultTo }}
+                  />
                 </div>
               </div>
               <div className="px-4 lg:px-6">

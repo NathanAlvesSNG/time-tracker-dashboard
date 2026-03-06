@@ -13,6 +13,7 @@ export function useDashboardProductivity(
       startTime: filters.startTime!,
       endTime: filters.endTime!,
       person: filters.person,
+      sourceSystem: filters.sourceSystem,
     },
     { enabled },
     isAdmin,

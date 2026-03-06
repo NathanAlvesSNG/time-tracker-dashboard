@@ -10,7 +10,7 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { startOfDay, startOfMonth } from "date-fns";
+import { startOfWeek, format, endOfDay } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import ProductivityPerDayLineChart from "@/components/charts/productivity-per-day-line-chart";
@@ -39,12 +39,19 @@ export default function Page() {
     pageSize: 10,
   });
 
+  const defaultFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
+  const defaultTo = new Date();
+
+  defaultFrom.setHours(12, 0, 0, 0);
+  defaultTo.setHours(12, 0, 0, 0);
+
   const startTime = dateRange?.from
     ? dateRange.from.toISOString()
-    : startOfMonth(new Date()).toISOString();
+    : defaultFrom.toISOString();
+
   const endTime = dateRange?.to
     ? dateRange.to.toISOString()
-    : startOfDay(new Date()).toISOString();
+    : defaultTo.toISOString();
 
   const {
     personal: { userTasks, score: userScore },
@@ -160,6 +167,10 @@ export default function Page() {
                     sourceSystems={sourceSystemOptions}
                     showSourceSystem
                     showDateRange
+                    defaultValue={{
+                      from: defaultFrom,
+                      to: defaultTo,
+                    }}
                   />
                 </div>
               </div>

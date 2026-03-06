@@ -58,7 +58,8 @@ export default function WorkedHoursPerDayLineChart({ data }: Props) {
                 axisLine={false}
                 tickMargin={8}
                 tickFormatter={(value) => {
-                  const date = parseISO(value);
+                  const dateOnly = value.split("T")[0];
+                  const date = parseISO(dateOnly);
                   return format(date, "dd/MM", { locale: ptBR });
                 }}
               />
@@ -75,7 +76,8 @@ export default function WorkedHoursPerDayLineChart({ data }: Props) {
                 content={
                   <ChartTooltipContentWithFormattedHour
                     labelFormatter={(value: string) => {
-                      const date = parseISO(value);
+                      const dateOnly = value.split("T")[0];
+                      const date = parseISO(dateOnly);
                       return format(date, "dd/MM/yyyy", { locale: ptBR });
                     }}
                     indicator="line"

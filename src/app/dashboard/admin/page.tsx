@@ -1,6 +1,6 @@
 "use client";
 
-import { startOfDay, startOfMonth } from "date-fns";
+import { endOfDay, startOfWeek } from "date-fns";
 import { useMemo } from "react";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import TotalHoursPerPersonPerProjectBarChart from "@/components/charts/total-hours-per-person-per-project-bar-chart";
@@ -23,12 +23,19 @@ export default function Page() {
   const { data: filterOptions, isLoading: isLoadingFilterOptions } =
     useFilterOptions();
 
+  const defaultFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
+  const defaultTo = new Date();
+
+  defaultFrom.setHours(12, 0, 0, 0);
+  defaultTo.setHours(12, 0, 0, 0);
+
   const startTime = dateRange?.from
     ? dateRange.from.toISOString()
-    : startOfMonth(new Date()).toISOString();
+    : defaultFrom.toISOString();
+
   const endTime = dateRange?.to
     ? dateRange.to.toISOString()
-    : startOfDay(new Date()).toISOString();
+    : defaultTo.toISOString();
 
   const {
     workedHours: {
@@ -114,6 +121,10 @@ export default function Page() {
                     showDateRange
                     showPerson
                     showProject
+                    defaultValue={{
+                      from: defaultFrom,
+                      to: defaultTo,
+                    }}
                   />
                 </div>
               </div>

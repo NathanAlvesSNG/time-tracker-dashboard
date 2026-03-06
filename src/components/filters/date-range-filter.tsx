@@ -3,7 +3,7 @@
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -30,19 +30,22 @@ export function DateRangeFilter({ defaultValue }: DateRangeFilterProps) {
     to: dateRange?.to,
   });
   const [open, setOpen] = useState(false);
+  const hasSetDefault = useRef(false);
 
   useEffect(() => {
     if (!defaultValue) return;
+    if (hasSetDefault.current) return;
 
-    if (!dateRange?.from && !dateRange?.to) {
-      setDateRange({
-        from: defaultValue.from,
-        to: defaultValue.to,
-      });
-    }
+    hasSetDefault.current = true;
+
+    const from = defaultValue.from ? new Date(defaultValue.from) : undefined;
+    const to = defaultValue.to ? new Date(defaultValue.to) : undefined;
+
+    if (from) from.setHours(12, 0, 0, 0);
+    if (to) to.setHours(12, 0, 0, 0);
+
+    setDateRange({ from, to });
   }, [defaultValue, setDateRange]);
-
-  const selected = dateRange;
 
   return (
     <div className="flex flex-col gap-2">
@@ -53,7 +56,7 @@ export function DateRangeFilter({ defaultValue }: DateRangeFilterProps) {
           <Button
             variant="outline"
             className={cn(
-              "w-[260px] justify-start text-left font-normal",
+              "w-65 justify-start text-left font-normal",
               !dateRange?.from && "text-muted-foreground",
             )}
           >

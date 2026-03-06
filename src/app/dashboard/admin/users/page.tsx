@@ -10,7 +10,7 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { startOfDay, startOfMonth } from "date-fns";
+import { endOfDay, startOfWeek } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
 import { AuthGuard } from "@/components/auth/auth-guard";
 import ProductivityPerDayLineChart from "@/components/charts/productivity-per-day-line-chart";
@@ -33,12 +33,19 @@ export default function Page() {
   const { data: filterOptions, isLoading: filterOptionsLoading } =
     useFilterOptions();
 
+  const defaultFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
+  const defaultTo = new Date();
+
+  defaultFrom.setHours(12, 0, 0, 0);
+  defaultTo.setHours(12, 0, 0, 0);
+
   const startTime = dateRange?.from
     ? dateRange.from.toISOString()
-    : startOfMonth(new Date()).toISOString();
+    : defaultFrom.toISOString();
+
   const endTime = dateRange?.to
     ? dateRange.to.toISOString()
-    : startOfDay(new Date()).toISOString();
+    : defaultTo.toISOString();
 
   const sourceSystemOptions = useMemo(() => {
     if (!filterOptions?.services) return [];
@@ -132,12 +139,15 @@ export default function Page() {
     }
 
     if (dateRange?.from && dateRange?.to) {
+      const from = new Date(dateRange.from);
+      const to = new Date(dateRange.to);
+
+      from.setHours(0, 0, 0, 0);
+      to.setHours(23, 59, 59, 999);
+
       newFilters.push({
         id: "startTime",
-        value: {
-          from: dateRange.from,
-          to: dateRange.to,
-        },
+        value: { from, to },
       });
     }
 
@@ -191,6 +201,10 @@ export default function Page() {
                     showPerson
                     showSourceSystem
                     hasAll={false}
+                    defaultValue={{
+                      from: defaultFrom,
+                      to: defaultTo,
+                    }}
                   />
                 </div>
               </div>

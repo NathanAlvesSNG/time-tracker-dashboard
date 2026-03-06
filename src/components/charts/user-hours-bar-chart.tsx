@@ -68,7 +68,8 @@ export function UserDailyHoursBarChart({ data }: Props) {
                 axisLine={false}
                 tickMargin={8}
                 tickFormatter={(value: string) => {
-                  const date = parseISO(value);
+                  const dateOnly = value.split("T")[0];
+                  const date = parseISO(dateOnly);
                   return format(date, "dd/MM", { locale: ptBR });
                 }}
               />
@@ -78,7 +79,8 @@ export function UserDailyHoursBarChart({ data }: Props) {
                   <ChartTooltipContentWithFormattedHour
                     indicator="dashed"
                     labelFormatter={(value: string) => {
-                      const date = parseISO(value);
+                      const dateOnly = value.split("T")[0];
+                      const date = parseISO(dateOnly);
                       return format(date, "dd/MM/yyyy", { locale: ptBR });
                     }}
                   />

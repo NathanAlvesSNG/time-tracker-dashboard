@@ -22,15 +22,13 @@ export const timeTracksColumns: ColumnDef<TimeTrackingRow>[] = [
   {
     accessorKey: "startTime",
     header: "Início",
-    filterFn: (row, columnId, value) => {
-      if (!value?.from && !value?.to) return true;
-
+    filterFn: (row, columnId, filterValue) => {
+      const { from, to } = filterValue;
       const rowDate = new Date(row.getValue(columnId));
 
-      if (value.from && rowDate < value.from) return false;
-      if (value.to && rowDate > value.to) return false;
+      rowDate.setHours(0, 0, 0, 0);
 
-      return true;
+      return rowDate >= from && rowDate <= to;
     },
     cell: ({ getValue }) => {
       const value = getValue<string>();

@@ -7,6 +7,7 @@ type Filters = {
   startTime: string;
   endTime: string;
   person?: string;
+  sourceSystem?: string;
 };
 
 type ProductivityResponse = {
@@ -17,7 +18,7 @@ type ProductivityResponse = {
 };
 
 export function useProductivity(
-  { startTime, endTime, person }: Filters,
+  { startTime, endTime, person, sourceSystem }: Filters,
   options?: { enabled?: boolean },
   isAdmin = false,
 ) {
@@ -34,13 +35,14 @@ export function useProductivity(
     Boolean(startTime && endTime && userId) && (options?.enabled ?? true);
 
   const query = useQuery<ProductivityResponse>({
-    queryKey: ["productivity", userId, startTime, endTime],
+    queryKey: ["productivity", userId, startTime, endTime, sourceSystem],
     enabled,
     queryFn: async () => {
       const response = await getUserProductivity({
         userId: Number(userId),
         startTime: startTime,
         endTime: endTime,
+        sourceSystem: sourceSystem ?? "",
       });
 
       return response;

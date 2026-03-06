@@ -33,6 +33,7 @@ export async function getUserProductivity(params?: {
   userId?: number;
   startTime?: string;
   endTime?: string;
+  sourceSystem?: string;
 }) {
   const { data } = await api.get("/dashboard/user-productivity", {
     params,
