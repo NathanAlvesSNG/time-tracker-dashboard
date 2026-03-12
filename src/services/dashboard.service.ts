@@ -180,3 +180,12 @@ export async function getPhasesInfo() {
   const { data } = await api.get("/dashboard/phases");
   return data;
 }
+
+export async function getAllTasksWithDeliveryDate(params?: {
+  person?: string;
+}) {
+  const { data } = await api.get("/dashboard/allTaskWithDelivery", {
+    params,
+  });
+  return data;
+}

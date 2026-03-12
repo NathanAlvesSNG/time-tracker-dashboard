@@ -4,6 +4,7 @@ import {
   IconClock,
   IconDashboard,
   IconLayoutDashboard,
+  IconListCheck,
   IconListDetails,
   IconUser,
   IconUsers,
@@ -39,6 +40,11 @@ const data = {
       title: "Apontamentos",
       url: "https://sngtimetrackersite.sng.com.br/index.html",
       icon: IconClock,
+    },
+    {
+      title: "Todas Tarefas",
+      url: "/dashboard/alltasks",
+      icon: IconListCheck,
     },
   ],
 
