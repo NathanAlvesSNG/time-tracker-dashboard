@@ -42,9 +42,6 @@ export default function Page() {
   const defaultFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
   const defaultTo = new Date();
 
-  defaultFrom.setHours(12, 0, 0, 0);
-  defaultTo.setHours(12, 0, 0, 0);
-
   const startTime = dateRange?.from
     ? dateRange.from.toISOString()
     : defaultFrom.toISOString();

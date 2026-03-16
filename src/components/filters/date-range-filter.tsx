@@ -24,28 +24,24 @@ type DateRangeFilterProps = {
 };
 
 export function DateRangeFilter({ defaultValue }: DateRangeFilterProps) {
-  const { dateRange, setDateRange } = useFilters();
+  const { dateRange, applyDefault, setDateRange } = useFilters();
   const [tempDateRange, setTempDateRange] = useState<DateRangeFilter>({
     from: dateRange?.from,
     to: dateRange?.to,
   });
   const [open, setOpen] = useState(false);
-  const hasSetDefault = useRef(false);
 
   useEffect(() => {
     if (!defaultValue) return;
-    if (hasSetDefault.current) return;
-
-    hasSetDefault.current = true;
 
     const from = defaultValue.from ? new Date(defaultValue.from) : undefined;
     const to = defaultValue.to ? new Date(defaultValue.to) : undefined;
 
-    if (from) from.setHours(12, 0, 0, 0);
-    if (to) to.setHours(12, 0, 0, 0);
+    if (from) from.setHours(0, 0, 0, 0);
+    if (to) to.setHours(23, 59, 59, 999);
 
-    setDateRange({ from, to });
-  }, [defaultValue, setDateRange]);
+    applyDefault({ from, to });
+  }, []);
 
   return (
     <div className="flex flex-col gap-2">

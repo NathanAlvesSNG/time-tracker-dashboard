@@ -11,15 +11,22 @@ import { useAuth } from "@/contexts/auth-context";
 import { useFilters } from "@/contexts/filters-context";
 import { useProductivity } from "@/hooks/use-productivity";
 import { cn, getProductivityUI } from "@/lib/utils";
+import { startOfWeek } from "date-fns/startOfWeek";
 
 export function UserMenu() {
   const { user, isLoading, logout } = useAuth();
   const { dateRange } = useFilters();
 
+  const defaultFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
+  const defaultTo = new Date();
+
+  defaultFrom.setHours(0, 0, 0, 0);
+  defaultTo.setHours(23, 59, 59, 999);
+
   const { data: productivityData } = useProductivity(
     {
-      startTime: dateRange?.from?.toISOString()!,
-      endTime: dateRange?.to?.toISOString()!,
+      startTime: dateRange?.from?.toISOString() || defaultFrom.toISOString(),
+      endTime: dateRange?.to?.toISOString() || defaultTo.toISOString(),
     },
     { enabled: !!dateRange?.from && !!dateRange?.to },
   );
