@@ -6,17 +6,20 @@ import { DateRangeFilter } from "../filters/date-range-filter";
 import { PersonFilter } from "../filters/person-filter";
 import { ProjectFilter } from "../filters/project-filter";
 import { SourceSystemFilter } from "../filters/source-system-filter";
+import { StatusFilter } from "../filters/status-filter";
 import { Separator } from "../ui/separator";
 
 type DashboardFiltersProps = {
   sourceSystems?: SourceSystem[];
   persons?: string[];
   projects?: string[];
+  statuses?: string[];
 
   showDateRange?: boolean;
   showSourceSystem?: boolean;
   showPerson?: boolean;
   showProject?: boolean;
+  showStatus?: boolean;
 
   hasAll?: boolean;
 
@@ -27,11 +30,13 @@ export function DashboardFilters({
   sourceSystems = [],
   persons = [],
   projects = [],
+  statuses = [],
 
   showDateRange = false,
   showSourceSystem = false,
   showPerson = false,
   showProject = false,
+  showStatus = false,
 
   hasAll = true,
 
@@ -47,6 +52,7 @@ export function DashboardFilters({
     showPerson && persons.length > 0 && (
       <PersonFilter key="person" options={persons} hasAll={hasAll} />
     ),
+    showStatus && statuses?.length > 0 && <StatusFilter key="status" options={statuses} />,
     showProject && !(sourceSystem === "IZIT") && projects.length > 0 && (
       <ProjectFilter key="project" options={projects} />
     ),

@@ -15,7 +15,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { TaskRow } from "@/types/tasks-list";
 
 export default function Page() {
-  const { sourceSystem, person } = useFilters();
+  const { sourceSystem, person, status } = useFilters();
   const { data: filterOptions, isLoading: isLoadingFilterOptions } = useFilterOptions();
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -48,8 +48,16 @@ export default function Page() {
       taskName: task.task,
       environment: task.sourceSystem,
       deliveryDate: task.deliveryDate ? new Date(task.deliveryDate) : null,
-      status: task.status
+      status: task.status,
     })) as TaskRow[];
+  }, [activeTasksData]);
+
+  const statusOptions = useMemo(() => {
+    if (!activeTasksData) return [];
+    const uniqueStatus = Array.from(
+      new Set(activeTasksData.map((task) => task.status).filter(Boolean)),
+    );
+    return uniqueStatus;
   }, [activeTasksData]);
 
   const table = useReactTable({
@@ -80,9 +88,16 @@ export default function Page() {
       });
     }
 
+    if (status && status !== "All") {
+      newFilters.push({
+        id: "status",
+        value: status,
+      });
+    }
+
     table.setPageIndex(0);
     table.setColumnFilters(newFilters);
-  }, [person, table]);
+  }, [person, status, table]);
 
   if (isLoading || isLoadingFilterOptions) {
     return (
@@ -121,7 +136,9 @@ export default function Page() {
               <div className="px-4 py-3 lg:px-6">
                 <DashboardFilters
                   persons={personOptions}
+                  statuses={statusOptions}
                   showPerson
+                  showStatus
                 />
               </div>
             </div>

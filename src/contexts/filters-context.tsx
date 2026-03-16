@@ -12,6 +12,8 @@ type FiltersContextType = {
   setPerson: (value?: string) => void;
   project?: string;
   setProject: (value?: string) => void;
+  status?: string;
+  setStatus: (value?: string) => void;
   dateRange?: DateRangeFilter;
   setDateRange: (value: DateRangeFilter) => void;
   applyDefault: (defaultValue: DateRangeFilter) => void;
@@ -30,6 +32,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   );
   const [person, setPerson] = useState<string | undefined>(undefined);
   const [project, setProject] = useState<string | undefined>(undefined);
+  const [status, setStatus] = useState<string | undefined>(undefined);
   const [dateRange, setDateRange] = useState<DateRangeFilter>(defaultDateRange);
   const [defaultApplied, setDefaultApplied] = useState(false);
 
@@ -48,6 +51,8 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
         setPerson,
         project,
         setProject,
+        status,
+        setStatus,
         dateRange,
         applyDefault,
         setDateRange,
