@@ -6,7 +6,7 @@ import { getAllTasksWithDeliveryDate } from "@/services/dashboard.service";
 type TaskDeliveryResponse = {
   userName: string | null;
   taskName: string;
-  sourceSystem: string;
+  software: string;
   status_descritivo: string;
   deliveryDate: string;
 };
@@ -51,7 +51,7 @@ export function useTasksWithDelivery(
       return data.map((task: TaskDeliveryResponse) => ({
         person: task.userName,
         task: task.taskName,
-        sourceSystem: task.sourceSystem,
+        sourceSystem: task.software,
         status: task.status_descritivo,
         deliveryDate: task.deliveryDate,
       }));
