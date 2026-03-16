@@ -12,6 +12,11 @@ export const allTasksColumns: ColumnDef<TaskRow>[] = [
     {
       accessorKey: "taskName",
       header: "Tarefa",
+      cell: ({ row }) => (
+        <div className="whitespace-normal break-words max-w-[400px]">
+          {row.original.taskName}
+        </div>
+      ),
     },
     {
       accessorKey: "environment",
