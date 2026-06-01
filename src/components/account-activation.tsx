@@ -15,14 +15,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  getPasswordRequirements,
+  isPasswordValid,
+} from "@/lib/password-policy";
 import { createPassword, getUserByEmail } from "@/services/users.service";
 
 type Step = "email" | "password" | "error";
-
-interface PasswordRequirement {
-  label: string;
-  met: boolean;
-}
 
 export function AccountActivation() {
   const [step, setStep] = useState<Step>("email");
@@ -34,13 +33,7 @@ export function AccountActivation() {
 
   const router = useRouter();
 
-  const passwordRequirements: PasswordRequirement[] = [
-    { label: "Mínimo de 8 caracteres", met: password.length >= 8 },
-    { label: "Pelo menos 1 letra maiúscula", met: /[A-Z]/.test(password) },
-    { label: "Pelo menos 1 número", met: /\d/.test(password) },
-  ];
-
-  const isPasswordValid = passwordRequirements.every((req) => req.met);
+  const passwordRequirements = getPasswordRequirements(password);
   const passwordsMatch = password === confirmPassword && confirmPassword !== "";
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
@@ -50,8 +43,6 @@ export function AccountActivation() {
 
     try {
       const data = await getUserByEmail(email);
-
-      console.log(data);
 
       if (!data.exists) {
         setStep("error");
@@ -76,7 +67,7 @@ export function AccountActivation() {
     e.preventDefault();
     setError("");
 
-    if (!isPasswordValid) {
+    if (!isPasswordValid(password)) {
       setError("Por favor, atenda todos os requisitos da senha.");
       return;
     }
@@ -253,7 +244,9 @@ export function AccountActivation() {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={isLoading || !isPasswordValid || !passwordsMatch}
+                disabled={
+                  isLoading || !isPasswordValid(password) || !passwordsMatch
+                }
               >
                 {isLoading ? (
                   <>
